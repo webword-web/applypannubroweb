@@ -31,12 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     
-    // Filter services based on query (title or tamil desc) and hidden status
+    // Filter services based on query (title or tamil desc)
     const matches = window.servicesData.filter(s => 
-      !s.isHidden && (
-        s.title.toLowerCase().includes(query) || 
-        s.desc.toLowerCase().includes(query)
-      )
+      s.title.toLowerCase().includes(query) || 
+      s.desc.toLowerCase().includes(query)
     );
     
     // Show suggestions dropdown
