@@ -72,6 +72,315 @@
     </div>
   </section>
 
+  <!-- ============================================================
+       FOUNDER & CEO SECTION
+  ============================================================ -->
+  <section id="founder-section" class="section-padding founder-section">
+    <div class="container">
+      <h2 class="section-title">Founder &amp; CEO</h2>
+      <p class="section-subtitle">The vision behind Apply Pannu Bro</p>
+
+      <div class="founder-card reveal-founder">
+        <!-- Glow Ring + Avatar -->
+        <div class="founder-avatar-wrap">
+          <div class="founder-avatar-ring"></div>
+          <div class="founder-avatar">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <!-- Decorative badge -->
+          <span class="founder-badge"><i class="fa-solid fa-crown"></i> CEO</span>
+        </div>
+
+        <!-- Info -->
+        <div class="founder-info">
+          <h3 class="founder-name">Dhanush<span class="founder-degree">, BCA</span></h3>
+          <p class="founder-designation">
+            <i class="fa-solid fa-briefcase"></i> Founder &amp; CEO — Apply Pannu Bro
+          </p>
+
+          <div class="founder-divider"></div>
+
+          <p class="founder-bio">
+            Founder &amp; CEO with a Bachelor of Computer Applications (BCA) and expertise in
+            <strong>Full-Stack Web Development</strong>, <strong>Cloud Computing</strong>, and
+            <strong>AI</strong>. Passionate about delivering reliable digital services through
+            innovation, professionalism, and customer-focused solutions.
+          </p>
+
+          <!-- Skills Tags -->
+          <div class="founder-tags">
+            <span><i class="fa-solid fa-code"></i> Full-Stack Dev</span>
+            <span><i class="fa-solid fa-cloud"></i> Cloud Computing</span>
+            <span><i class="fa-solid fa-brain"></i> Artificial Intelligence</span>
+            <span><i class="fa-solid fa-users"></i> Customer Focus</span>
+          </div>
+
+          <!-- Social Row -->
+          <div class="founder-social">
+            <a href="https://wa.me/918525041700" target="_blank" title="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a href="mailto:applypannubro@gmail.com" title="Email">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+            <a href="#" title="LinkedIn">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Section Styles (scoped inline for portability) -->
+  <style>
+    /* ---- Section Wrapper ---- */
+    .founder-section {
+      background: linear-gradient(
+        135deg,
+        rgba(37, 99, 235, 0.04) 0%,
+        var(--bg-color) 40%,
+        rgba(16, 185, 129, 0.04) 100%
+      );
+    }
+
+    /* ---- Card ---- */
+    .founder-card {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 28px;
+      padding: 50px 55px;
+      box-shadow: 0 20px 60px rgba(37, 99, 235, 0.08), 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+      /* Scroll-reveal initial state */
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    .founder-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.4s ease;
+    }
+
+    .founder-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 80px rgba(37, 99, 235, 0.12), 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    /* ---- Avatar ---- */
+    .founder-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .founder-avatar-ring {
+      position: absolute;
+      width: 165px;
+      height: 165px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--primary-color) 0deg,
+        var(--secondary-color) 120deg,
+        var(--accent-color) 240deg,
+        var(--primary-color) 360deg
+      );
+      animation: ring-spin 8s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes ring-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .founder-avatar {
+      position: relative;
+      z-index: 1;
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(16,185,129,0.1));
+      border: 4px solid var(--surface-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--primary-color);
+      box-shadow: 0 8px 30px rgba(37,99,235,0.2);
+    }
+
+    .founder-badge {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--primary-color), #6366f1);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+      z-index: 2;
+      box-shadow: 0 4px 10px rgba(37,99,235,0.35);
+    }
+
+    /* ---- Info ---- */
+    .founder-info {
+      flex: 1;
+    }
+
+    .founder-name {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .founder-degree {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+
+    .founder-designation {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .founder-designation i {
+      color: var(--accent-color);
+    }
+
+    .founder-divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 3px;
+      margin-bottom: 18px;
+    }
+
+    .founder-bio {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 0.97rem;
+      margin-bottom: 22px;
+    }
+
+    .founder-bio strong {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    /* ---- Skill Tags ---- */
+    .founder-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .founder-tags span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--primary-color);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 50px;
+      border: 1px solid rgba(37, 99, 235, 0.15);
+      transition: all 0.3s;
+    }
+
+    .founder-tags span:hover {
+      background: var(--primary-color);
+      color: #fff;
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+
+    /* ---- Social Links ---- */
+    .founder-social {
+      display: flex;
+      gap: 12px;
+    }
+
+    .founder-social a {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--primary-color);
+      font-size: 1.1rem;
+      border: 1px solid rgba(37, 99, 235, 0.15);
+      transition: all 0.3s;
+    }
+
+    .founder-social a:hover {
+      background: var(--primary-color);
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) {
+      .founder-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 25px;
+        gap: 35px;
+      }
+
+      .founder-designation {
+        justify-content: center;
+      }
+
+      .founder-divider {
+        margin: 0 auto 18px;
+      }
+
+      .founder-tags {
+        justify-content: center;
+      }
+
+      .founder-social {
+        justify-content: center;
+      }
+
+      .founder-name {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .founder-avatar-ring { width: 130px; height: 130px; }
+      .founder-avatar      { width: 116px; height: 116px; font-size: 3rem; }
+      .founder-name        { font-size: 1.4rem; }
+    }
+  </style>
+
   <footer>
     <div class="container">
       <div class="copyright">
@@ -81,5 +390,24 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // Intersection Observer — triggers .is-visible when card enters viewport
+    (function () {
+      const card = document.querySelector('.reveal-founder');
+      if (!card) return;
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              card.classList.add('is-visible');
+              observer.unobserve(card);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      observer.observe(card);
+    })();
+  </script>
 </body>
 </html>
