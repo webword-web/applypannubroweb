@@ -1,4 +1,145 @@
-/* Tablet Styles */
+/*--------------------------------------------------------------
+   Responsive Styles
+   --------------------------------------------------------------*/
+
+/* Global mobile fixes */
+body, html {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tablet and larger mobile (max-width: 992px) */
+@media (max-width: 992px) {
+  /* Hero */
+  .hero h1 {
+    font-size: 2.8rem;
+  }
+  .hero {
+    padding: 140px 0 80px;
+  }
+
+  /* Header */
+  .header-container {
+    padding: 15px 20px;
+  }
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: block;
+    z-index: 1100;
+  }
+
+  /* Mobile Navigation */
+  .mobile-nav {
+    position: fixed;
+    top: 70px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: var(--surface-color);
+    flex-direction: column;
+    padding: 30px 20px;
+    transition: left 0.3s ease;
+    border-top: 1px solid var(--border-color);
+  }
+  .mobile-nav.active {
+    left: 0;
+  }
+  .mobile-nav ul {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  /* Features / Why Choose Us */
+  .features-grid {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+  }
+
+  /* Services Grid */
+  .services-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  /* Service Card */
+  .service-card {
+    padding: 20px;
+  }
+  .service-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+
+  /* Stats */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  /* Review Cards */
+  .review-card {
+    min-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  /* Floating Buttons */
+  .floating-btns {
+    bottom: 20px;
+    right: 20px;
+  }
+  .float-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  /* Category Filters (horizontal scroll on mobile) */
+  .category-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+  }
+  .filter-btn {
+    white-space: nowrap;
+  }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .hero {
+    padding: 120px 0 80px;
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .hero-btns {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .search-bar input {
+    font-size: 0.9rem;
+    padding: 12px 20px 12px 45px;
+  }
+}
 @media (max-width: 992px) {
   .hero h1 {
     font-size: 2.8rem;
@@ -24,7 +165,16 @@
   }
   
   .mobile-menu-btn {
+    /* Ensure visibility on small screens */
+    z-index: 1100;
+  }
+
     display: block;
+  }
+
+  /* Services Grid adjustments for tablets */
+  .services-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
   
   .mobile-nav {
@@ -53,6 +203,22 @@
   .hero {
     padding: 120px 0 80px;
   }
+
+  /* Services Grid single column on mobile */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .service-card {
+    padding: 20px;
+  }
+
+  .service-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
   
   .hero h1 {
     font-size: 2.2rem;
@@ -72,6 +238,11 @@
     grid-template-columns: 1fr;
     text-align: center;
   }
+
+  .review-card {
+    min-width: 100%;
+    margin-bottom: 20px;
+  }
   
   .social-links {
     justify-content: center;
@@ -80,6 +251,12 @@
   .floating-btns {
     bottom: 20px;
     right: 20px;
+  }
+
+  .float-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
   }
   
   .float-btn {
