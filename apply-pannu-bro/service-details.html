@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Details | APPLY PANNU BRO</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animation.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <h1>APPLY PANNU BRO</h1>
+        <span>One Stop Solution For All Your Needs</span>
+      </a>
+      <nav class="desktop-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html" class="active">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+        <button id="mobile-menu-btn" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-nav" class="mobile-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Details Hero -->
+  <section class="details-hero fade-in-up">
+    <div class="container" style="text-align: center;">
+      <div style="font-size: 4rem; color: var(--primary-color); margin-bottom: 20px;" id="sd-icon">
+        <i class="fa-solid fa-file-signature"></i>
+      </div>
+      <h1 style="font-size: 2.8rem; margin-bottom: 10px;" id="sd-title">Service Details</h1>
+      <p style="color: var(--text-secondary); font-size: 1.2rem;" id="sd-desc">Loading service information...</p>
+    </div>
+  </section>
+
+  <!-- Details Content -->
+  <section class="section-padding" style="padding-top: 40px;">
+    <div class="container">
+      
+      <!-- Breadcrumb -->
+      <div style="margin-bottom: 30px; color: var(--text-secondary); font-size: 0.9rem;">
+        <a href="index.html">Home</a> <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem; margin: 0 5px;"></i> 
+        <a href="services.html">Services</a> <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem; margin: 0 5px;"></i> 
+        <span id="sd-breadcrumb" style="color: var(--primary-color);">Details</span>
+      </div>
+
+      <div class="details-content fade-in-up delay-100">
+        
+        <div class="details-main">
+          <section>
+            <h2>Service Description</h2>
+            <p>இந்த சேவையை பற்றிய முழுமையான விவரங்கள் இங்கே. APPLY PANNU BRO மூலம் மிக எளிதாக, விரைவாகவும், பாதுகாப்பாகவும் நீங்கள் இந்த சேவையை பெற்றுக்கொள்ளலாம்.</p>
+            <p style="margin-top: 15px;">We guarantee 100% data security and privacy while processing your documents.</p>
+          </section>
+          
+          <section>
+            <h2>Required Documents</h2>
+            <ul class="req-list">
+              <li>Aadhaar Card (ஆதார் அட்டை)</li>
+              <li>Passport Size Photo (புகைப்படம்)</li>
+              <li>Mobile Number linked with Aadhaar</li>
+              <li>Signature / Thumb Impression</li>
+            </ul>
+          </section>
+          
+          <section>
+            <h2>FAQ</h2>
+            <div class="faq-list">
+              <div class="faq-item">
+                <div class="faq-question">Processing Time? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>Normally it takes 3 to 7 working days.</p></div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-question">How to Apply? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer"><p>Click the 'WhatsApp Now' button, send your documents, and pay the fee online.</p></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="details-sidebar">
+          <div class="sidebar-card">
+            <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Pricing & Info</h3>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+              <span style="color: var(--text-secondary);">Service Charge:</span>
+              <strong id="sd-price">₹--</strong>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+              <span style="color: var(--text-secondary);">Category:</span>
+              <strong id="sd-category">--</strong>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 25px;">
+              <span style="color: var(--text-secondary);">Processing:</span>
+              <strong>Fast Track</strong>
+            </div>
+            
+            <a href="#" id="sd-apply-btn" class="btn btn-primary" style="width: 100%; margin-bottom: 15px; background: #25D366; box-shadow: 0 4px 15px rgba(37,211,102,0.3);">
+              <i class="fa-brands fa-whatsapp"></i> Apply via WhatsApp
+            </a>
+            <a href="tel:+918525041700" class="btn btn-outline" style="width: 100%;">
+              <i class="fa-solid fa-phone"></i> Call for Enquiry
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="copyright">
+        <p>&copy; <span id="current-year"></span> APPLY PANNU BRO. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Logic to populate details from URL param
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = parseInt(urlParams.get('id'));
+      
+      if (id && window.servicesData) {
+        const service = window.servicesData.find(s => s.id === id);
+        if (service) {
+          document.title = `${service.title} | APPLY PANNU BRO`;
+          document.getElementById('sd-title').innerText = service.title;
+          document.getElementById('sd-desc').innerText = service.desc;
+          document.getElementById('sd-icon').innerHTML = `<i class="${service.icon}"></i>`;
+          document.getElementById('sd-breadcrumb').innerText = service.title;
+          document.getElementById('sd-price').innerText = service.price;
+          document.getElementById('sd-category').innerText = service.category;
+          
+          const msg = `Hi, I want to apply for ${service.title}. Please provide more details.`;
+          document.getElementById('sd-apply-btn').href = `https://wa.me/918525041700?text=${encodeURIComponent(msg)}`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
