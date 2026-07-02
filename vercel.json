@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/apply-pannu-bro/$1"
+    }
+  ]
+}
