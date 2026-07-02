@@ -1,5 +1,5 @@
 // Global Service Data based on User Request
-window.servicesData = [
+const defaultServicesSeed = [
   // Government Services (1-20)
   { id: 1, title: 'PAN Card Apply', category: 'Government', icon: 'fa-solid fa-id-card', desc: 'புதிய பான் கார்டு விண்ணப்பிக்க', price: '₹200' },
   { id: 2, title: 'PAN Card Correction', category: 'Government', icon: 'fa-solid fa-pen-to-square', desc: 'பான் கார்டு திருத்தம் செய்ய', price: '₹200' },
@@ -68,6 +68,21 @@ window.servicesData = [
   { id: 59, title: 'Hotel Booking', category: 'Booking', icon: 'fa-solid fa-bed', desc: 'ஹோட்டல் டிக்கெட்', price: 'Custom' },
   { id: 60, title: 'Visa Assistance', category: 'Travel', icon: 'fa-solid fa-earth-americas', desc: 'விசா உதவி', price: 'Custom' }
 ];
+
+// Add default properties and check LocalStorage
+const defaultServices = defaultServicesSeed.map(s => ({
+  ...s,
+  status: 'Available',
+  isHidden: false
+}));
+
+const localData = localStorage.getItem('applyPannuBroServices');
+if (localData) {
+  window.servicesData = JSON.parse(localData);
+} else {
+  window.servicesData = defaultServices;
+  localStorage.setItem('applyPannuBroServices', JSON.stringify(window.servicesData));
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   // Hide Loading Spinner
