@@ -304,9 +304,160 @@ header {
 
 .hero-btns {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
   justify-content: center;
 }
+
+.btn-hero-main {
+  min-width: 220px;
+  font-size: 1.05rem;
+  padding: 14px 32px;
+}
+
+.hero-btns-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.35);
+  min-width: 160px;
+  justify-content: center;
+}
+.btn-whatsapp:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+  color: #fff;
+}
+
+.btn-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35);
+  min-width: 160px;
+  justify-content: center;
+}
+.btn-call:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.5);
+  color: #fff;
+}
+
+/* Floating Action Buttons */
+.floating-btns {
+  position: fixed;
+  right: 18px;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+  align-items: center;
+}
+
+.float-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.float-btn:hover {
+  transform: translateY(-4px) scale(1.08);
+}
+
+/* Tooltip */
+.float-btn::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 20, 40, 0.88);
+  color: #e0eaff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  border: 1px solid rgba(99, 155, 255, 0.2);
+}
+.float-btn:hover::before {
+  opacity: 1;
+}
+
+.float-call {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
+}
+.float-call:hover { box-shadow: 0 8px 30px rgba(37, 99, 235, 0.65); }
+
+.float-whatsapp {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.45);
+}
+.float-whatsapp:hover { box-shadow: 0 8px 30px rgba(37, 211, 102, 0.65); }
+
+.float-instagram {
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  box-shadow: 0 4px 18px rgba(220, 39, 67, 0.4);
+}
+.float-instagram:hover { box-shadow: 0 8px 30px rgba(220, 39, 67, 0.6); }
+
+.float-facebook {
+  background: linear-gradient(135deg, #1877f2, #0d5bbc);
+  box-shadow: 0 4px 18px rgba(24, 119, 242, 0.45);
+}
+.float-facebook:hover { box-shadow: 0 8px 30px rgba(24, 119, 242, 0.65); }
+
+.float-email {
+  background: linear-gradient(135deg, #6366f1, #4338ca);
+  box-shadow: 0 4px 18px rgba(99, 102, 241, 0.45);
+}
+.float-email:hover { box-shadow: 0 8px 30px rgba(99, 102, 241, 0.65); }
 
 /* Trust Badges */
 .trust-badges-section {
