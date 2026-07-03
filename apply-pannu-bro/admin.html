@@ -23,13 +23,13 @@
       </div>
       <form id="login-form">
         <div class="form-group">
-          <label><i class="fa-solid fa-user"></i> Username</label>
-          <input type="text" id="admin-username" placeholder="Enter username" autocomplete="off">
+          <label><i class="fa-solid fa-envelope"></i> Email Address</label>
+          <input type="email" id="admin-email" placeholder="Enter admin email" autocomplete="off" required>
         </div>
         <div class="form-group">
           <label><i class="fa-solid fa-lock"></i> Password</label>
           <div style="position:relative;">
-            <input type="password" id="admin-password" placeholder="Enter password" autocomplete="off">
+            <input type="password" id="admin-password" placeholder="Enter password" autocomplete="off" required>
             <button type="button" onclick="togglePwd()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:1rem;">
               <i class="fa-solid fa-eye" id="pwd-eye"></i>
             </button>
@@ -62,6 +62,15 @@
         </a>
         <a href="#" class="sidebar-link" data-tab="add-service-tab">
           <i class="fa-solid fa-plus"></i> Add New Service
+        </a>
+        <a href="#" class="sidebar-link" data-tab="settings-tab">
+          <i class="fa-solid fa-gears"></i> Website Settings
+        </a>
+        <a href="#" class="sidebar-link" data-tab="faqs-tab">
+          <i class="fa-solid fa-circle-question"></i> Manage FAQs
+        </a>
+        <a href="#" class="sidebar-link" data-tab="testimonials-tab">
+          <i class="fa-solid fa-comments"></i> Testimonials
         </a>
       </nav>
       <div class="sidebar-footer">
@@ -141,16 +150,19 @@
       <!-- ---- MANAGE SERVICES TAB ---- -->
       <div id="services-tab" class="admin-tab">
         <!-- Search + Filters -->
-        <div class="services-toolbar">
+        <div class="services-toolbar" style="flex-wrap:wrap;gap:15px;">
           <div class="admin-search-bar">
             <i class="fa-solid fa-search"></i>
             <input type="text" id="admin-search" placeholder="Search services...">
           </div>
-          <div class="admin-filter-btns">
-            <button class="adm-filter active" data-status="all">All</button>
-            <button class="adm-filter" data-status="available">Available</button>
-            <button class="adm-filter" data-status="coming-soon">Coming Soon</button>
-            <button class="adm-filter" data-status="not-available">Not Available</button>
+          <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+            <div class="admin-filter-btns">
+              <button class="adm-filter active" data-status="all">All</button>
+              <button class="adm-filter" data-status="available">Available</button>
+              <button class="adm-filter" data-status="coming-soon">Coming Soon</button>
+              <button class="adm-filter" data-status="not-available">Not Available</button>
+            </div>
+            <span style="font-size:0.8rem;color:var(--text-secondary);"><i class="fa-solid fa-arrows-up-down-left-right"></i> Drag and drop cards to reorder (only in "All" filter, no search query)</span>
           </div>
         </div>
 
@@ -226,9 +238,187 @@
               </button>
               <button type="button" class="btn btn-outline" id="svc-reset-btn" onclick="resetServiceForm()">
                 <i class="fa-solid fa-rotate-left"></i> Reset
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ---- SETTINGS TAB ---- -->
+      <div id="settings-tab" class="admin-tab">
+        <div class="admin-section-box" style="max-width:800px;">
+          <h3 style="margin-bottom:20px;">Website Settings & Banner Configuration</h3>
+          <form id="settings-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Announcement Bar Text</label>
+                <textarea id="set-announcement-text" rows="2" placeholder="Announcement shown at the top of all pages..."></textarea>
+              </div>
+              <div class="form-group">
+                <label>Announcement Visibility Status</label>
+                <select id="set-announcement-visible">
+                  <option value="true">👁 Show Announcement</option>
+                  <option value="false">🙈 Hide Announcement</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Hero Section Main Title *</label>
+                <input type="text" id="set-hero-title" placeholder="e.g. APPLY PANNU BRO" required>
+              </div>
+              <div class="form-group">
+                <label>Hero Section Subtitle *</label>
+                <input type="text" id="set-hero-subtitle" placeholder="e.g. Net Centre | Online Services" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Homepage Background Banner Image</label>
+              <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:10px;background:var(--bg-color);padding:15px;border-radius:10px;border:1px dashed var(--border-color);">
+                <img id="set-hero-preview" src="" alt="Hero Image Preview" style="max-width:180px;max-height:100px;border-radius:6px;border:1px solid var(--border-color);display:none;object-fit:cover;">
+                <div style="flex:1;min-width:200px;">
+                  <input type="file" id="set-hero-file" accept="image/*" style="margin-bottom:8px;display:block;">
+                  <button type="button" class="btn btn-outline" id="upload-hero-btn" style="padding:6px 14px;font-size:0.85rem;display:inline-flex;align-items:center;gap:6px;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Upload and Replace Image
+                  </button>
+                  <div id="hero-upload-progress" style="font-size:0.8rem;color:var(--text-secondary);margin-top:5px;display:none;">Upload status: 0%</div>
+                </div>
+              </div>
+            </div>
+
+            <hr style="margin:30px 0;border:0;border-top:1px solid var(--border-color);">
+
+            <h3 style="margin-bottom:20px;">Contact Details & Service Handles</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Primary Call Contact Number *</label>
+                <input type="text" id="set-contact-phone" placeholder="e.g. 8525041700" required>
+              </div>
+              <div class="form-group">
+                <label>WhatsApp Contact Number *</label>
+                <input type="text" id="set-contact-whatsapp" placeholder="e.g. 8525041700" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Contact Email Address *</label>
+                <input type="email" id="set-contact-email" placeholder="e.g. applypannubro@gmail.com" required>
+              </div>
+              <div class="form-group">
+                <label>Working Hours Tagline *</label>
+                <input type="text" id="set-working-hours" placeholder="e.g. 24x7 Support Available" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Office Address Location *</label>
+              <textarea id="set-contact-address" rows="3" placeholder="Address..." required></textarea>
+            </div>
+
+            <div style="margin-top:25px;">
+              <button type="submit" class="btn btn-primary" id="settings-submit-btn">
+                <i class="fa-solid fa-floppy-disk"></i> Save Configuration Settings
               </button>
             </div>
           </form>
+        </div>
+      </div>
+
+      <!-- ---- FAQs TAB ---- -->
+      <div id="faqs-tab" class="admin-tab">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:30px;align-items:start;">
+          <!-- Add/Edit FAQ form -->
+          <div class="admin-section-box">
+            <h3 id="faq-form-title" style="margin-bottom:20px;">Add New FAQ Entry</h3>
+            <form id="faq-form">
+              <input type="hidden" id="edit-faq-id">
+              <div class="form-group">
+                <label>Question Label (Tamil/English) *</label>
+                <input type="text" id="faq-question" placeholder="e.g. PAN card apply documents needed?" required>
+              </div>
+              <div class="form-group">
+                <label>Answer Content *</label>
+                <textarea id="faq-answer" rows="4" placeholder="Enter answers here..." required></textarea>
+              </div>
+              <div style="display:flex;gap:12px;margin-top:10px;">
+                <button type="submit" class="btn btn-primary" id="faq-submit-btn">
+                  <i class="fa-solid fa-plus"></i> Add FAQ
+                </button>
+                <button type="button" class="btn btn-outline" id="faq-reset-btn" onclick="resetFaqForm()">
+                  Reset
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- FAQs List -->
+          <div class="admin-section-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+              <h3 style="margin:0;">FAQs List</h3>
+              <span style="font-size:0.8rem;color:var(--text-secondary);"><i class="fa-solid fa-arrows-up-down"></i> Drag cards to reorder</span>
+            </div>
+            <div id="admin-faqs-list" class="reorderable-list">
+              <!-- Rendered dynamically by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- TESTIMONIALS TAB ---- -->
+      <div id="testimonials-tab" class="admin-tab">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:30px;align-items:start;">
+          <!-- Add/Edit Testimonial form -->
+          <div class="admin-section-box">
+            <h3 id="testimonial-form-title" style="margin-bottom:20px;">Add Client Testimonial</h3>
+            <form id="testimonial-form">
+              <input type="hidden" id="edit-testimonial-id">
+              <div class="form-group">
+                <label>Client Name *</label>
+                <input type="text" id="testimonial-name" placeholder="e.g. Priya M." required>
+              </div>
+              <div class="form-group">
+                <label>Review/Testimonial Text *</label>
+                <textarea id="testimonial-text" rows="4" placeholder="Their experience review..." required></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Star Rating *</label>
+                  <select id="testimonial-rating" required>
+                    <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+                    <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+                    <option value="3">⭐⭐⭐ (3 Stars)</option>
+                    <option value="2">⭐⭐ (2 Stars)</option>
+                    <option value="1">⭐ (1 Star)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Review Source *</label>
+                  <input type="text" id="testimonial-source" placeholder="e.g. Google Review" required>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;margin-top:10px;">
+                <button type="submit" class="btn btn-primary" id="testimonial-submit-btn">
+                  <i class="fa-solid fa-plus"></i> Add Testimonial
+                </button>
+                <button type="button" class="btn btn-outline" id="testimonial-reset-btn" onclick="resetTestimonialForm()">
+                  Reset
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Testimonials List -->
+          <div class="admin-section-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+              <h3 style="margin:0;">Testimonials List</h3>
+              <span style="font-size:0.8rem;color:var(--text-secondary);"><i class="fa-solid fa-arrows-up-down"></i> Drag cards to reorder</span>
+            </div>
+            <div id="admin-testimonials-list" class="reorderable-list">
+              <!-- Rendered dynamically by JS -->
+            </div>
+          </div>
         </div>
       </div>
 
@@ -321,6 +511,13 @@
 
   <!-- ===================== TOAST ===================== -->
   <div id="toast" class="admin-toast"></div>
+
+  <!-- Firebase Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
 
   <script src="js/main.js"></script>
   <script src="js/admin.js"></script>

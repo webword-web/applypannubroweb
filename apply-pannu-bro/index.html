@@ -16,6 +16,12 @@
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/animation.css">
   <link rel="stylesheet" href="css/admin.css">
+
+  <!-- Firebase Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-content.js"></script>
 </head>
 
 <body>
@@ -63,6 +69,8 @@
   <!-- Hero Section -->
   <section class="hero fade-in-up">
     <div class="container">
+      <h1 class="dynamic-hero-title" style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.2; margin-bottom: 10px; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">APPLY PANNU BRO</h1>
+      <p class="dynamic-hero-subtitle" style="font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--text-secondary); max-width: 800px; margin: 0 auto 30px; font-weight: 500;">One Stop Solution For All Your Needs</p>
 
       <div class="search-bar">
         <i class="fa-solid fa-search"></i>
@@ -73,8 +81,8 @@
       <div class="hero-btns">
         <a href="services.html" class="btn btn-primary btn-hero-main">அனைத்து சேவைகள் <i class="fa-solid fa-arrow-right"></i></a>
         <div class="hero-btns-row">
-          <a href="https://wa.me/918525041700" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp Now</a>
-          <a href="tel:+918525041700" class="btn btn-call"><i class="fa-solid fa-phone"></i> Call Now</a>
+          <a href="https://wa.me/918525041700" target="_blank" class="btn btn-whatsapp dynamic-whatsapp-link"><i class="fa-brands fa-whatsapp"></i> WhatsApp Now</a>
+          <a href="tel:+918525041700" class="btn btn-call dynamic-phone-link"><i class="fa-solid fa-phone"></i> Call Now</a>
         </div>
       </div>
     </div>
@@ -165,37 +173,9 @@
       <p class="section-subtitle">What our happy clients say about us</p>
 
       <div class="reviews-container">
-        <div class="reviews-track">
-          <!-- Cards duplicated via JS -->
-          <div class="review-card">
-            <div class="review-stars">
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            </div>
-            <p>"Apply Pannu Bro made my PAN card process so easy and fast! Very reliable service."</p>
-            <div style="margin-top: 15px; font-weight: 600;">- Karthik R.</div>
-            <div style="font-size: 0.8rem; color: var(--text-secondary);">Google Review</div>
-          </div>
-
-          <div class="review-card">
-            <div class="review-stars">
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            </div>
-            <p>"Best service center for all government certificates. Transparent pricing and expert support."</p>
-            <div style="margin-top: 15px; font-weight: 600;">- Priya M.</div>
-            <div style="font-size: 0.8rem; color: var(--text-secondary);">Google Review</div>
-          </div>
-
-          <div class="review-card">
-            <div class="review-stars">
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            </div>
-            <p>"Very quick response on WhatsApp. My FSSAI registration was done without any hassle."</p>
-            <div style="margin-top: 15px; font-weight: 600;">- Suresh K.</div>
-            <div style="font-size: 0.8rem; color: var(--text-secondary);">Google Review</div>
-          </div>
+        <div class="reviews-track" id="dynamic-reviews-track">
+          <!-- Rendered dynamically by JS slider.js -->
+          <div style="text-align:center;width:100%;color:var(--text-secondary);padding:20px;">Loading customer reviews...</div>
         </div>
       </div>
     </div>
@@ -219,7 +199,7 @@
             </div>
             <div>
               <h4 style="margin-bottom: 5px;">WhatsApp / Call</h4>
-              <p style="color: var(--text-secondary);">8525041700</p>
+              <p style="color: var(--text-secondary);" class="dynamic-phone-text">8525041700</p>
             </div>
           </div>
 
@@ -230,7 +210,7 @@
             </div>
             <div>
               <h4 style="margin-bottom: 5px;">Email</h4>
-              <p style="color: var(--text-secondary);">applypannubro@gmail.com</p>
+              <p style="color: var(--text-secondary);" class="dynamic-email-text">applypannubro@gmail.com</p>
             </div>
           </div>
 
@@ -241,7 +221,7 @@
             </div>
             <div>
               <h4 style="margin-bottom: 5px;">Working Hours</h4>
-              <p style="color: var(--text-secondary);">24x7 Support Available</p>
+              <p style="color: var(--text-secondary);" class="dynamic-working-hours-text">24x7 Support Available</p>
             </div>
           </div>
         </div>
@@ -251,25 +231,9 @@
           <h2 class="section-title" style="text-align: left;">FAQ</h2>
           <p class="section-subtitle" style="text-align: left; margin-bottom: 30px;">Frequently Asked Questions</p>
 
-          <div class="faq-list">
-            <div class="faq-item">
-              <div class="faq-question">PAN எப்படி Apply செய்வது? <i class="fa-solid fa-chevron-down"></i></div>
-              <div class="faq-answer">
-                <p>உங்கள் ஆதார் அட்டை மற்றும் புகைப்படம் இருந்தால் போதும். நாங்கள் ஆன்லைனில் விண்ணப்பித்து தருவோம்.</p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">Aadhaar Update எவ்வளவு நேரம்? <i class="fa-solid fa-chevron-down"></i></div>
-              <div class="faq-answer">
-                <p>விண்ணப்பித்த 3 முதல் 7 நாட்களுக்குள் மாற்றம் செய்யப்படும்.</p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">WhatsApp மூலம் சேவை பெற முடியுமா? <i class="fa-solid fa-chevron-down"></i></div>
-              <div class="faq-answer">
-                <p>ஆம், உங்கள் ஆவணங்களை WhatsApp மூலம் அனுப்பி சேவைகளை பெற்றுக்கொள்ளலாம்.</p>
-              </div>
-            </div>
+          <div class="faq-list" id="dynamic-faq-list">
+            <!-- Rendered by JS -->
+            <div style="color:var(--text-secondary);padding:10px;">Loading FAQs...</div>
           </div>
         </div>
 
@@ -317,8 +281,8 @@
         <div class="footer-col">
           <h4>Contact Info</h4>
           <ul>
-            <li><i class="fa-brands fa-whatsapp"></i> 8525041700</li>
-            <li><i class="fa-solid fa-envelope"></i> applypannubro@gmail.com</li>
+            <li><a href="https://wa.me/918525041700" target="_blank" class="dynamic-whatsapp-link"><i class="fa-brands fa-whatsapp"></i> <span class="dynamic-whatsapp-text">8525041700</span></a></li>
+            <li><a href="mailto:applypannubro@gmail.com" class="dynamic-email-link"><i class="fa-solid fa-envelope"></i> <span class="dynamic-email-text">applypannubro@gmail.com</span></a></li>
           </ul>
         </div>
       </div>
@@ -333,11 +297,11 @@
   <div class="fab-wrapper" id="fab-wrapper">
     <!-- Expandable contact menu -->
     <div class="fab-menu" id="fab-menu">
-      <a href="tel:+918525041700" class="fab-item fab-item-call">
+      <a href="tel:+918525041700" class="fab-item fab-item-call dynamic-phone-link">
         <span class="fab-label">Call</span>
         <div class="fab-icon-circle fab-call"><i class="fa-solid fa-phone"></i></div>
       </a>
-      <a href="https://wa.me/918525041700" target="_blank" class="fab-item fab-item-wa">
+      <a href="https://wa.me/918525041700" target="_blank" class="fab-item fab-item-wa dynamic-whatsapp-link">
         <span class="fab-label">WhatsApp</span>
         <div class="fab-icon-circle fab-wa"><i class="fa-brands fa-whatsapp"></i></div>
       </a>
@@ -349,7 +313,7 @@
         <span class="fab-label">Facebook</span>
         <div class="fab-icon-circle fab-fb"><i class="fa-brands fa-facebook-f"></i></div>
       </a>
-      <a href="mailto:applypannubro@gmail.com" class="fab-item fab-item-email">
+      <a href="mailto:applypannubro@gmail.com" class="fab-item fab-item-email dynamic-email-link">
         <span class="fab-label">Email</span>
         <div class="fab-icon-circle fab-email"><i class="fa-solid fa-envelope"></i></div>
       </a>

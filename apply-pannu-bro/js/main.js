@@ -190,22 +190,74 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', animateCounters);
   animateCounters(); // run once on load
 
-  // FAQ Accordion
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
+  // Dynamic Real-time FAQ loader
+  const faqListContainer = document.getElementById('dynamic-faq-list');
+  if (faqListContainer && typeof window.db !== 'undefined') {
+    window.db.collection('faqs').orderBy('orderIndex').onSnapshot((snapshot) => {
+      faqListContainer.innerHTML = '';
+      
+      const faqs = [];
+      snapshot.forEach(doc => {
+        faqs.push({ id: doc.id, ...doc.data() });
+      });
+
+      if (faqs.length === 0) {
+        faqListContainer.innerHTML = '<div style="color:var(--text-secondary);padding:10px;">No FAQs found.</div>';
+        return;
+      }
+
+      faqs.forEach(faq => {
+        const item = document.createElement('div');
+        item.className = 'faq-item';
+        item.innerHTML = `
+          <div class="faq-question">${escapeMainHTML(faq.question)} <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-answer">
+            <p>${escapeMainHTML(faq.answer)}</p>
+          </div>
+        `;
+        faqListContainer.appendChild(item);
+      });
+    }, (err) => {
+      console.error("FAQ snapshot fetch error: ", err);
+      faqListContainer.innerHTML = '<div style="color:var(--text-secondary);padding:10px;">Failed to load FAQs.</div>';
+    });
+  }
+
+  // Dynamic FAQ Accordion Toggle using Event Delegation
+  document.addEventListener('click', (e) => {
+    const question = e.target.closest('.faq-question');
     if (question) {
-      question.addEventListener('click', () => {
+      const item = question.closest('.faq-item');
+      if (item) {
+        const faqList = item.closest('.faq-list');
         const isActive = item.classList.contains('active');
-        // Close all
-        faqItems.forEach(f => f.classList.remove('active'));
+        
+        // Close all siblings inside this list
+        if (faqList) {
+          faqList.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
+        }
+        
         // Open clicked if it wasn't active
         if (!isActive) {
           item.classList.add('active');
         }
-      });
+      }
     }
   });
+
+  // Escaping helper
+  function escapeMainHTML(str) {
+    if (!str) return '';
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag)
+    );
+  }
 
   // Current year in footer
   const yearEl = document.getElementById('current-year');
