@@ -15,10 +15,7 @@ img {
 
 /* Tablet and larger mobile (max-width: 992px) */
 @media (max-width: 992px) {
-  /* Hero */
-  .hero h1 {
-    font-size: 2.8rem;
-  }
+  /* Hero typography is handled via clamp() in style.css */
   .hero {
     padding: 140px 0 80px;
   }
@@ -107,9 +104,7 @@ img {
   .hero {
     padding: 120px 0 80px;
   }
-  .hero h1 {
-    font-size: 2.2rem;
-  }
+  /* removed hardcoded hero h1 size */
   .hero-btns {
     flex-direction: column;
     gap: 10px;
@@ -123,9 +118,7 @@ img {
   }
 }
 @media (max-width: 992px) {
-  .hero h1 {
-    font-size: 2.8rem;
-  }
+  /* removed hardcoded hero h1 size */
   
   .details-content {
     grid-template-columns: 1fr;
@@ -161,9 +154,7 @@ img {
     min-height: 44px;
   }
   
-  .hero h1 {
-    font-size: 2.2rem;
-  }
+  /* removed hardcoded hero h1 size */
   
   .trust-badges {
     flex-wrap: wrap;

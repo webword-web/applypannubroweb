@@ -284,20 +284,22 @@ header {
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: clamp(1.2rem, 4.5vw, 3.5rem);
   font-weight: 800;
   line-height: 1.2;
   margin-bottom: 20px;
   background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  white-space: nowrap;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: clamp(0.55rem, 2vw, 1.2rem);
   color: var(--text-secondary);
   max-width: 800px;
   margin: 0 auto 40px;
+  white-space: nowrap;
 }
 
 .hero-btns {
