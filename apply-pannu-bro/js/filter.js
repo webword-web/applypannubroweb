@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     visible.forEach(service => {
-      const whatsappMsg = `Hi, I want to apply for ${service.title}. Please provide more details.`;
+      const whatsappMsg = `வணக்கம், நான் ${service.title} சேவைக்கு விண்ணப்பிக்க விரும்புகிறேன். மேலும் விவரங்களை தெரிவிக்கவும்.\n\nHi, I want to apply for ${service.title}. Please provide more details.`;
       const whatsappUrl = `https://wa.me/918525041700?text=${encodeURIComponent(whatsappMsg)}`;
 
       const isUnavailable = service.status === 'not-available';

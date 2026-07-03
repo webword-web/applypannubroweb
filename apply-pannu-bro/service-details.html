@@ -158,7 +158,7 @@
           document.getElementById('sd-price').innerText = service.price;
           document.getElementById('sd-category').innerText = service.category;
           
-          const msg = `Hi, I want to apply for ${service.title}. Please provide more details.`;
+          const msg = `வணக்கம், நான் ${service.title} சேவைக்கு விண்ணப்பிக்க விரும்புகிறேன். மேலும் விவரங்களை தெரிவிக்கவும்.\n\nHi, I want to apply for ${service.title}. Please provide more details.`;
           document.getElementById('sd-apply-btn').href = `https://wa.me/918525041700?text=${encodeURIComponent(msg)}`;
         }
       }
