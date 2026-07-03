@@ -27,35 +27,7 @@ img {
   .header-container {
     padding: 15px 20px;
   }
-  .desktop-nav {
-    display: none;
-  }
-  .mobile-menu-btn {
-    display: block;
-    z-index: 1100;
-  }
-
-  /* Mobile Navigation */
-  .mobile-nav {
-    position: fixed;
-    top: 70px;
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background: var(--surface-color);
-    flex-direction: column;
-    padding: 30px 20px;
-    transition: left 0.3s ease;
-    border-top: 1px solid var(--border-color);
-  }
-  .mobile-nav.active {
-    left: 0;
-  }
-  .mobile-nav ul {
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
+  /* Removed mobile-nav styles to style.css */
 
   /* Trust Badges */
   .trust-badges {
@@ -171,28 +143,7 @@ img {
 
   /* Services Grid adjustments for tablets (Removed duplicate) */
   
-  .mobile-nav {
-    position: fixed;
-    top: 70px;
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background: var(--surface-color);
-    flex-direction: column;
-    padding: 30px 20px;
-    transition: left 0.3s ease;
-    border-top: 1px solid var(--border-color);
-  }
-  
-  .mobile-nav.active {
-    left: 0;
-  }
-  
-  .mobile-nav ul {
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
+  /* Removed mobile nav from tablet breakpoint */
   
   .hero {
     padding: 120px 0 80px;

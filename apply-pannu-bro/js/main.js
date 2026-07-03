@@ -86,13 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentTheme = localStorage.getItem('theme');
   if (currentTheme == 'dark') {
     document.body.setAttribute('data-theme', 'dark');
-    if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> Theme';
   } else if (currentTheme == 'light') {
     document.body.setAttribute('data-theme', 'light');
-    if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+    if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> Theme';
   } else if (prefersDarkScheme.matches) {
     document.body.setAttribute('data-theme', 'dark');
-    if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> Theme';
   }
 
   if (themeToggle) {
@@ -100,11 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
       let theme = document.body.getAttribute('data-theme');
       if (theme === 'dark') {
         document.body.setAttribute('data-theme', 'light');
-        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> Theme';
         localStorage.setItem('theme', 'light');
       } else {
         document.body.setAttribute('data-theme', 'dark');
-        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> Theme';
         localStorage.setItem('theme', 'dark');
       }
     });
@@ -113,20 +113,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mobile Menu Toggle
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileNav = document.getElementById('mobile-nav');
+  const closeMenuBtn = document.getElementById('close-menu-btn');
   
   if (mobileMenuBtn && mobileNav) {
     mobileMenuBtn.addEventListener('click', () => {
-      mobileNav.classList.toggle('active');
-      const icon = mobileMenuBtn.querySelector('i');
-      if (mobileNav.classList.contains('active')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-xmark');
-      } else {
-        icon.classList.remove('fa-xmark');
-        icon.classList.add('fa-bars');
-      }
+      mobileNav.classList.add('active');
     });
   }
+  
+  if (closeMenuBtn && mobileNav) {
+    closeMenuBtn.addEventListener('click', () => {
+      mobileNav.classList.remove('active');
+    });
+  }
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (mobileNav && mobileNav.classList.contains('active')) {
+      if (!mobileNav.contains(e.target) && e.target !== mobileMenuBtn && !mobileMenuBtn.contains(e.target)) {
+        mobileNav.classList.remove('active');
+      }
+    }
+  });
 
   // Sticky Header & Scroll to Top
   const header = document.querySelector('header');

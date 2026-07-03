@@ -13,34 +13,38 @@
 <body>
 
   <!-- Header -->
+    <!-- Header -->
   <header>
     <div class="header-container">
       <a href="index.html" class="logo">
-        <h1>APPLY PANNU BRO</h1>
-        <span>One Stop Solution For All Your Needs</span>
+        <h1>Apply Pannunga Bro</h1>
       </a>
-      <nav class="desktop-nav">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html" class="active">Services</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-      <div class="nav-actions"><a href="admin.html" class="btn btn-primary" style="padding: 5px 15px; font-size: 0.85rem; margin-right: 10px; box-shadow: none;">Admin Login</a>
-        <button id="theme-toggle" class="theme-toggle"><i class="fa-solid fa-moon"></i></button>
-        <button id="mobile-menu-btn" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
-      </div>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
   </header>
 
+  <!-- Side Drawer Menu -->
   <div id="mobile-nav" class="mobile-nav">
+    <div class="menu-top">
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+        <i class="fa-solid fa-moon"></i> Theme
+      </button>
+      <button id="close-menu-btn" class="close-menu-btn" aria-label="Close Menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="index.html#why-us">Why Choose Us</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
+    <div class="menu-bottom">
+      <a href="admin.html" class="btn btn-primary admin-btn"><i class="fa-solid fa-lock"></i> Admin Login</a>
+    </div>
   </div>
 
   <!-- Details Hero -->
