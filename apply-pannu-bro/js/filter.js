@@ -1,27 +1,16 @@
+/**
+ * APPLY PANNU BRO - Service Filter & Grid Renderer
+ * Fetches services from Firestore in real-time and renders the grid.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   const filterBtns = document.querySelectorAll('.filter-btn');
   const servicesGrid = document.getElementById('dynamic-services-grid');
 
   if (!servicesGrid) return;
 
-  // -------------------------------------------------------
-  // Get services from LocalStorage (admin changes) or fall
-  // back to the built-in window.servicesData
-  // -------------------------------------------------------
-  function getLiveServices() {
-    const stored = localStorage.getItem('apb_services');
-    if (stored) {
-      return JSON.parse(stored);
-    }
-    // First visit: seed defaults with "available" status and visible=true
-    const defaults = (window.servicesData || []).map(s => ({
-      ...s,
-      status: 'available',
-      visible: true
-    }));
-    localStorage.setItem('apb_services', JSON.stringify(defaults));
-    return defaults;
-  }
+  // Global live services array, updated by Firestore snapshot
+  window._liveServices = [];
 
   // -------------------------------------------------------
   // Status badge HTML
@@ -38,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -------------------------------------------------------
-  // Render services
+  // Render services into grid
   // -------------------------------------------------------
   window.renderServices = (services) => {
     servicesGrid.innerHTML = '';
@@ -61,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
       card.className = 'service-card fade-in-up';
       card.innerHTML = `
         <div class="service-icon"><i class="${service.icon || 'fa-solid fa-cog'}"></i></div>
-        <h3 class="service-title">${service.title}</h3>
-        <p class="service-desc-ta">${service.desc || ''}</p>
+        <h3 class="service-title">${escapeFilterHTML(service.title)}</h3>
+        <p class="service-desc-ta">${escapeFilterHTML(service.desc || '')}</p>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:0.8rem;background:var(--border-color);padding:3px 8px;border-radius:5px;">${service.category}</span>
+          <span style="font-size:0.8rem;background:var(--border-color);padding:3px 8px;border-radius:5px;">${escapeFilterHTML(service.category)}</span>
           ${statusBadgeHtml(service.status)}
         </div>
         <div style="display:flex;gap:8px;">
@@ -80,14 +69,59 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // -------------------------------------------------------
-  // Initial render
+  // Firestore Real-time Listener
   // -------------------------------------------------------
-  const allServices = getLiveServices();
-  const isHomePage = document.getElementById('home-page-marker') !== null;
-  window.renderServices(isHomePage ? allServices.slice(0, 12) : allServices);
+  if (typeof window.db !== 'undefined') {
+    // Show loading state
+    servicesGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-secondary);"><i class="fa-solid fa-spinner fa-spin" style="font-size:2rem;margin-bottom:15px;display:block;color:var(--primary-color);"></i>Loading services...</div>';
+
+    window.db.collection('services').orderBy('orderIndex').onSnapshot((snapshot) => {
+      const services = [];
+      snapshot.forEach(doc => {
+        services.push({ id: doc.id, ...doc.data() });
+      });
+
+      window._liveServices = services;
+
+      // Get current active filter
+      const activeFilterBtn = document.querySelector('.filter-btn.active');
+      const activeCategory = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'All';
+
+      // Get current search query
+      const searchInput = document.getElementById('service-search');
+      const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+      let filtered = services;
+
+      // Apply category filter
+      if (activeCategory !== 'All') {
+        filtered = filtered.filter(s => s.category === activeCategory || (s.category && s.category.includes(activeCategory)));
+      }
+
+      // Apply search filter
+      if (searchQuery.length >= 2) {
+        filtered = filtered.filter(s =>
+          s.title.toLowerCase().includes(searchQuery) ||
+          (s.desc && s.desc.toLowerCase().includes(searchQuery))
+        );
+      }
+
+      // On homepage, show only first 12
+      const isHomePage = document.getElementById('home-page-marker') !== null;
+      if (isHomePage) filtered = filtered.slice(0, 12);
+
+      window.renderServices(filtered);
+    }, (error) => {
+      console.error("Firestore services listener error: ", error);
+      servicesGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-secondary);">Failed to load services. Please refresh.</div>';
+    });
+  } else {
+    // Fallback: no Firebase connection
+    servicesGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-secondary);">Database not connected.</div>';
+  }
 
   // -------------------------------------------------------
-  // Filter Logic
+  // Filter Button Click Logic
   // -------------------------------------------------------
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -95,13 +129,39 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
 
       const category = btn.getAttribute('data-filter');
-      let filtered = getLiveServices();
+      let filtered = window._liveServices || [];
 
       if (category !== 'All') {
-        filtered = filtered.filter(s => s.category === category || s.category.includes(category));
+        filtered = filtered.filter(s => s.category === category || (s.category && s.category.includes(category)));
       }
 
-      window.renderServices(isHomePage ? filtered.slice(0, 12) : filtered);
+      // Also apply active search query
+      const searchInput = document.getElementById('service-search');
+      const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      if (searchQuery.length >= 2) {
+        filtered = filtered.filter(s =>
+          s.title.toLowerCase().includes(searchQuery) ||
+          (s.desc && s.desc.toLowerCase().includes(searchQuery))
+        );
+      }
+
+      const isHomePage = document.getElementById('home-page-marker') !== null;
+      if (isHomePage) filtered = filtered.slice(0, 12);
+
+      window.renderServices(filtered);
     });
   });
 });
+
+function escapeFilterHTML(str) {
+  if (!str) return '';
+  return str.replace(/[&<>'"]/g, 
+    tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag)
+  );
+}

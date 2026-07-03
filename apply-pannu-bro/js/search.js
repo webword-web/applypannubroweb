@@ -1,3 +1,8 @@
+/**
+ * APPLY PANNU BRO - Search Bar Logic
+ * Uses the live Firestore services array from filter.js (window._liveServices)
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('service-search');
   const suggestionsBox = document.getElementById('search-suggestions');
@@ -5,9 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!searchInput) return;
 
   function getLiveServices() {
-    const stored = localStorage.getItem('apb_services');
-    if (stored) return JSON.parse(stored);
-    return window.servicesData || [];
+    return window._liveServices || [];
   }
 
   searchInput.addEventListener('input', (e) => {
@@ -20,14 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
         suggestionsBox.innerHTML = '';
       }
 
-      // Reset grid
+      // Reset grid to current filter
       const servicesGrid = document.getElementById('dynamic-services-grid');
       if (servicesGrid && query.length === 0 && typeof window.renderServices === 'function') {
         const activeFilter = document.querySelector('.filter-btn.active');
         let filterCat = activeFilter ? activeFilter.getAttribute('data-filter') : 'All';
         let dataToRender = allServices;
         if (filterCat !== 'All') {
-          dataToRender = dataToRender.filter(s => s.category === filterCat);
+          dataToRender = dataToRender.filter(s => s.category === filterCat || (s.category && s.category.includes(filterCat)));
         }
         const isHomePage = document.getElementById('home-page-marker') !== null;
         if (isHomePage) dataToRender = dataToRender.slice(0, 12);
@@ -48,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         matches.slice(0, 5).forEach(match => {
           const div = document.createElement('div');
           div.style.cssText = 'padding:10px 20px;cursor:pointer;border-bottom:1px solid var(--border-color);';
-          div.innerHTML = `<i class="${match.icon || 'fa-solid fa-cog'}" style="color:var(--primary-color);margin-right:10px;"></i> ${match.title}`;
+          div.innerHTML = `<i class="${match.icon || 'fa-solid fa-cog'}" style="color:var(--primary-color);margin-right:10px;"></i> ${escapeSearchHTML(match.title)}`;
           div.addEventListener('click', () => {
             window.location.href = `service-details.html?id=${match.id}`;
           });
@@ -80,3 +83,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+function escapeSearchHTML(str) {
+  if (!str) return '';
+  return str.replace(/[&<>'"]/g, 
+    tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag)
+  );
+}

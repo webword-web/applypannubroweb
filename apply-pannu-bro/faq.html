@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/animation.css">
+  <!-- Firebase Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/site-content.js"></script>
 </head>
 <body>
 
@@ -55,26 +60,11 @@
 
   <section class="section-padding">
     <div class="container fade-in-up delay-100">
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-question">PAN எப்படி Apply செய்வது? <i class="fa-solid fa-chevron-down"></i></div>
-          <div class="faq-answer"><p>உங்கள் ஆதார் அட்டை மற்றும் புகைப்படம் இருந்தால் போதும். நாங்கள் ஆன்லைனில் விண்ணப்பித்து தருவோம். நீங்கள் WhatsApp மூலம் ஆவணங்களை அனுப்பலாம்.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-question">Aadhaar Update எவ்வளவு நேரம் ஆகும்? <i class="fa-solid fa-chevron-down"></i></div>
-          <div class="faq-answer"><p>விண்ணப்பித்த 3 முதல் 7 நாட்களுக்குள் உங்களுடைய ஆதார் விவரங்கள் மாற்றப்படும்.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-question">Passport Apply Fees என்ன? <i class="fa-solid fa-chevron-down"></i></div>
-          <div class="faq-answer"><p>புதிய பாஸ்போர்ட் விண்ணப்பிக்க பொதுவாக ₹1500 அரசு கட்டணமாக செலுத்த வேண்டும், அதனுடன் எங்கள் சேவை கட்டணம் ₹300 சேர்த்து ₹1800 ஆகும் (Tatkal fees may vary).</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-question">GST Registration செய்வது எப்படி? <i class="fa-solid fa-chevron-down"></i></div>
-          <div class="faq-answer"><p>உங்கள் PAN, ஆதார், புகைப்படம் மற்றும் தொழில் செய்யும் முகவரிக்கான சான்றிதழ் தேவை. 3-5 நாட்களில் GST பதிவு செய்து தரப்படும்.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-question">Visa Assistance கிடைக்குமா? <i class="fa-solid fa-chevron-down"></i></div>
-          <div class="faq-answer"><p>ஆம், சுற்றுலா மற்றும் வேலை விசா பெறுவதற்கான முழுமையான வழிகாட்டுதல்களை நாங்கள் வழங்குகிறோம்.</p></div>
+      <div class="faq-list" id="dynamic-faq-list">
+        <!-- FAQs will be loaded dynamically from Firestore -->
+        <div style="text-align:center;padding:40px;color:var(--text-secondary);">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;margin-bottom:10px;display:block;color:var(--primary-color);"></i>
+          Loading FAQs...
         </div>
       </div>
     </div>
