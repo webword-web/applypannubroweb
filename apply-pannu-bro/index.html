@@ -329,23 +329,36 @@
     </div>
   </footer>
 
-  <!-- Floating Buttons -->
-  <div class="floating-btns">
-    <a href="tel:+918525041700" class="float-btn float-call" aria-label="Call Us" data-tooltip="Call">
-      <i class="fa-solid fa-phone"></i>
-    </a>
-    <a href="https://wa.me/918525041700" target="_blank" class="float-btn float-whatsapp" aria-label="WhatsApp" data-tooltip="WhatsApp">
-      <i class="fa-brands fa-whatsapp"></i>
-    </a>
-    <a href="https://www.instagram.com/applypannubro?igsh=MXg4M3Z2eHZqcTFlZQ==" target="_blank" class="float-btn float-instagram" aria-label="Instagram" data-tooltip="Instagram">
-      <i class="fa-brands fa-instagram"></i>
-    </a>
-    <a href="https://www.facebook.com/applypannubro" target="_blank" class="float-btn float-facebook" aria-label="Facebook" data-tooltip="Facebook">
-      <i class="fa-brands fa-facebook-f"></i>
-    </a>
-    <a href="mailto:applypannubro@gmail.com" class="float-btn float-email" aria-label="Email" data-tooltip="Email">
-      <i class="fa-solid fa-envelope"></i>
-    </a>
+  <!-- Floating Contact FAB -->
+  <div class="fab-wrapper" id="fab-wrapper">
+    <!-- Expandable contact menu -->
+    <div class="fab-menu" id="fab-menu">
+      <a href="tel:+918525041700" class="fab-item fab-item-call">
+        <span class="fab-label">Call</span>
+        <div class="fab-icon-circle fab-call"><i class="fa-solid fa-phone"></i></div>
+      </a>
+      <a href="https://wa.me/918525041700" target="_blank" class="fab-item fab-item-wa">
+        <span class="fab-label">WhatsApp</span>
+        <div class="fab-icon-circle fab-wa"><i class="fa-brands fa-whatsapp"></i></div>
+      </a>
+      <a href="https://www.instagram.com/applypannubro?igsh=MXg4M3Z2eHZqcTFlZQ==" target="_blank" class="fab-item fab-item-ig">
+        <span class="fab-label">Instagram</span>
+        <div class="fab-icon-circle fab-ig"><i class="fa-brands fa-instagram"></i></div>
+      </a>
+      <a href="https://www.facebook.com/applypannubro" target="_blank" class="fab-item fab-item-fb">
+        <span class="fab-label">Facebook</span>
+        <div class="fab-icon-circle fab-fb"><i class="fa-brands fa-facebook-f"></i></div>
+      </a>
+      <a href="mailto:applypannubro@gmail.com" class="fab-item fab-item-email">
+        <span class="fab-label">Email</span>
+        <div class="fab-icon-circle fab-email"><i class="fa-solid fa-envelope"></i></div>
+      </a>
+    </div>
+    <!-- Main FAB toggle button -->
+    <button class="fab-main" id="fab-main" aria-label="Contact Us" aria-expanded="false">
+      <i class="fa-solid fa-headset fab-icon-default"></i>
+      <i class="fa-solid fa-xmark fab-icon-close"></i>
+    </button>
   </div>
 
   <!-- JS Links -->

@@ -212,4 +212,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
   }
+
+  // Floating Contact FAB
+  const fabMain = document.getElementById('fab-main');
+  const fabWrapper = document.getElementById('fab-wrapper');
+
+  if (fabMain && fabWrapper) {
+    fabMain.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = fabWrapper.classList.toggle('open');
+      fabMain.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!fabWrapper.contains(e.target)) {
+        fabWrapper.classList.remove('open');
+        fabMain.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 });
