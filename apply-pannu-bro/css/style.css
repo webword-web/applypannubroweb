@@ -4,8 +4,8 @@
   /* Light Theme Variables */
   --bg-color: #f8fafc;
   --surface-color: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --text-primary: #a5a9b3;
+  --text-secondary: #b3c4dd;
   --primary-color: #2563eb;
   --primary-hover: #1d4ed8;
   --secondary-color: #10b981;
@@ -146,12 +146,10 @@ header {
   width: 100%;
   z-index: 1000;
   transition: all 0.3s ease;
-  background: linear-gradient(
-    135deg,
-    rgba(10, 10, 30, 0.92) 0%,
-    rgba(20, 30, 70, 0.92) 50%,
-    rgba(10, 10, 30, 0.92) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(10, 10, 30, 0.92) 0%,
+      rgba(20, 30, 70, 0.92) 50%,
+      rgba(10, 10, 30, 0.92) 100%);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(99, 155, 255, 0.18);
@@ -306,7 +304,7 @@ header {
   padding: 160px 0 100px;
   text-align: center;
   background: radial-gradient(circle at 50% -20%, var(--primary-hover) 0%, transparent 40%),
-              radial-gradient(circle at -20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 40%);
+    radial-gradient(circle at -20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 40%);
 }
 
 .hero h1 {
@@ -455,7 +453,8 @@ header {
   transition: all 0.3s;
 }
 
-.filter-btn:hover, .filter-btn.active {
+.filter-btn:hover,
+.filter-btn.active {
   background: var(--primary-color);
   color: #fff;
   border-color: var(--primary-color);
