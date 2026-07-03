@@ -4,8 +4,8 @@
   /* Light Theme Variables */
   --bg-color: #f8fafc;
   --surface-color: #ffffff;
-  --text-primary: #a5a9b3;
-  --text-secondary: #b3c4dd;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --primary-color: #2563eb;
   --primary-hover: #1d4ed8;
   --secondary-color: #10b981;
@@ -146,14 +146,9 @@ header {
   width: 100%;
   z-index: 1000;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg,
-      rgba(10, 10, 30, 0.92) 0%,
-      rgba(20, 30, 70, 0.92) 50%,
-      rgba(10, 10, 30, 0.92) 100%);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(99, 155, 255, 0.18);
-  box-shadow: 0 2px 32px rgba(37, 99, 235, 0.13), 0 0 0 1px rgba(99, 155, 255, 0.07);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .header-container {
@@ -176,25 +171,6 @@ header {
   color: var(--primary-color);
   line-height: 1.2;
   margin: 0;
-  text-shadow: 0 0 18px rgba(37, 99, 235, 0.5);
-}
-
-.logo-tagline {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: rgba(200, 220, 255, 0.88);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
-  white-space: nowrap;
-  margin-top: 2px;
-  line-height: 1.4;
-}
-
-.tagline-sep {
-  color: rgba(99, 155, 255, 0.75);
-  margin: 0 6px;
-  font-weight: 300;
 }
 
 /* Hamburger Menu Button */
