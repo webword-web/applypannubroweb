@@ -266,47 +266,54 @@ nav ul li a.active::after {
   justify-content: center;
 }
 
-/* Why Choose Us Cards */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: -50px;
+/* Trust Badges */
+.trust-badges-section {
   position: relative;
   z-index: 10;
+  margin-top: -40px;
 }
 
-.feature-card {
-  background: var(--surface-color);
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: var(--shadow-md);
-  text-align: center;
-  border: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--shadow-lg);
-}
-
-.feature-icon {
-  width: 60px;
-  height: 60px;
-  background: rgba(37, 99, 235, 0.1);
-  color: var(--primary-color);
-  border-radius: 50%;
+.trust-badges {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  margin: 0 auto 20px;
+  justify-content: space-evenly;
+  background: var(--surface-color);
+  padding: 15px 30px;
+  border-radius: 50px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 15px;
+  flex-wrap: nowrap;
 }
 
-.feature-card h3 {
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+
+.trust-badge:hover {
+  transform: translateY(-3px);
+  color: var(--primary-color);
+}
+
+.trust-badge i {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.badge-separator {
+  color: var(--text-secondary);
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  opacity: 0.4;
+  user-select: none;
 }
 
 /* Search and Filters */
