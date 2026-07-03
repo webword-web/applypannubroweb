@@ -19,7 +19,7 @@ img {
 
   /* Hero typography is handled via clamp() in style.css */
   .hero {
-    padding: 130px 0 80px;
+    padding: 140px 0 80px;
   }
 
   /* Header */
