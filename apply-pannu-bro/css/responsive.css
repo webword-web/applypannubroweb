@@ -3,7 +3,8 @@
    --------------------------------------------------------------*/
 
 /* Global mobile fixes */
-body, html {
+body,
+html {
   overflow-x: hidden;
 }
 
@@ -15,15 +16,17 @@ img {
 
 /* Tablet and larger mobile (max-width: 992px) */
 @media (max-width: 992px) {
+
   /* Hero typography is handled via clamp() in style.css */
   .hero {
-    padding: 140px 0 80px;
+    padding: 130px 0 80px;
   }
 
   /* Header */
   .header-container {
     padding: 15px 20px;
   }
+
   /* Removed mobile-nav styles to style.css */
 
   /* Trust Badges */
@@ -34,9 +37,11 @@ img {
     justify-content: center;
     gap: 15px 20px;
   }
+
   .badge-separator {
     display: none;
   }
+
   .trust-badge {
     width: calc(50% - 15px);
     justify-content: center;
@@ -52,6 +57,7 @@ img {
   .service-card {
     padding: 20px;
   }
+
   .service-btn {
     padding: 10px;
     font-size: 0.9rem;
@@ -81,6 +87,7 @@ img {
     bottom: 20px;
     right: 20px;
   }
+
   .float-btn {
     width: 50px;
     height: 50px;
@@ -94,6 +101,7 @@ img {
     justify-content: flex-start;
     padding-bottom: 10px;
   }
+
   .filter-btn {
     white-space: nowrap;
   }
@@ -104,123 +112,130 @@ img {
   .hero {
     padding: 120px 0 80px;
   }
+
   /* removed hardcoded hero h1 size */
   .hero-btns {
     flex-direction: column;
     gap: 10px;
   }
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
+
   .search-bar input {
     font-size: 0.9rem;
     padding: 12px 20px 12px 45px;
   }
 }
+
 @media (max-width: 992px) {
   /* removed hardcoded hero h1 size */
-  
+
   .details-content {
     grid-template-columns: 1fr;
   }
-    display: none;
-  }
-  
-  .mobile-menu-btn {
-    /* Ensure visibility on small screens */
-    z-index: 1100;
-  }
 
-    display: block;
-  }
+  display: none;
+}
 
-  /* Services Grid adjustments for tablets (Removed duplicate) */
-  
-  /* Removed mobile nav from tablet breakpoint */
-  
-  .hero {
-    padding: 120px 0 80px;
-  }
+.mobile-menu-btn {
+  /* Ensure visibility on small screens */
+  z-index: 1100;
+}
 
-  /* (Removed duplicate single column mobile grid) */
+display: block;
+}
 
-  .service-card {
-    padding: 20px;
-  }
+/* Services Grid adjustments for tablets (Removed duplicate) */
 
-  .service-btn {
-    padding: 10px;
-    font-size: 0.9rem;
-    min-height: 44px;
-  }
-  
-  /* removed hardcoded hero h1 size */
-  
-  .trust-badges {
-    flex-wrap: wrap;
-    border-radius: 20px;
-    padding: 20px;
-    justify-content: center;
-    gap: 15px 20px;
-  }
-  .badge-separator {
-    display: none;
-  }
-  .trust-badge {
-    width: calc(50% - 15px);
-    justify-content: center;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  
-  .footer-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
+/* Removed mobile nav from tablet breakpoint */
 
-  .review-card {
-    min-width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .social-links {
-    justify-content: center;
-  }
-  
-  .floating-btns {
-    bottom: 20px;
-    right: 20px;
-  }
+.hero {
+  padding: 120px 0 80px;
+}
 
-  .float-btn {
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-  }
-  
-  .float-btn {
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-  }
-  
-  .category-filters {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    justify-content: flex-start;
-    padding-bottom: 10px;
-  }
-  
-  .filter-btn {
-    white-space: nowrap;
-  }
-  
-  .review-card {
-    min-width: 280px;
-  }
+/* (Removed duplicate single column mobile grid) */
+
+.service-card {
+  padding: 20px;
+}
+
+.service-btn {
+  padding: 10px;
+  font-size: 0.9rem;
+  min-height: 44px;
+}
+
+/* removed hardcoded hero h1 size */
+
+.trust-badges {
+  flex-wrap: wrap;
+  border-radius: 20px;
+  padding: 20px;
+  justify-content: center;
+  gap: 15px 20px;
+}
+
+.badge-separator {
+  display: none;
+}
+
+.trust-badge {
+  width: calc(50% - 15px);
+  justify-content: center;
+}
+
+.stats-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.footer-grid {
+  grid-template-columns: 1fr;
+  text-align: center;
+}
+
+.review-card {
+  min-width: 100%;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  justify-content: center;
+}
+
+.floating-btns {
+  bottom: 20px;
+  right: 20px;
+}
+
+.float-btn {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+}
+
+.float-btn {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+}
+
+.category-filters {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  justify-content: flex-start;
+  padding-bottom: 10px;
+}
+
+.filter-btn {
+  white-space: nowrap;
+}
+
+.review-card {
+  min-width: 280px;
+}
 }
 
 /* Small Mobile */
@@ -228,16 +243,16 @@ img {
   .hero-btns {
     flex-direction: column;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .search-bar input {
     font-size: 0.9rem;
     padding: 12px 20px 12px 45px;
   }
-  
+
   .trust-badge {
     width: 100%;
   }
@@ -245,34 +260,35 @@ img {
 
 /* Mobile Devices (max-width: 768px) */
 @media (max-width: 768px) {
+
   /* 2 columns on mobile */
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  
+
   /* Reduce card sizes proportionally */
   .service-card {
     padding: 15px;
     border-radius: 12px;
   }
-  
+
   .service-icon {
     font-size: 1.8rem;
     margin-bottom: 10px;
   }
-  
+
   .service-title {
     font-size: 1rem;
     white-space: normal;
     word-wrap: break-word;
   }
-  
+
   .service-desc-ta {
     font-size: 0.8rem;
     margin-bottom: 10px;
   }
-  
+
   .service-btn {
     padding: 8px;
     font-size: 0.85rem;
