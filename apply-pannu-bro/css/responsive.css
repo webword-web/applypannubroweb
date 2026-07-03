@@ -75,7 +75,7 @@ img {
 
   /* Services Grid */
   .services-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
 
@@ -169,10 +169,7 @@ img {
     display: block;
   }
 
-  /* Services Grid adjustments for tablets */
-  .services-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
+  /* Services Grid adjustments for tablets (Removed duplicate) */
   
   .mobile-nav {
     position: fixed;
@@ -201,11 +198,7 @@ img {
     padding: 120px 0 80px;
   }
 
-  /* Services Grid single column on mobile */
-  .services-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
+  /* (Removed duplicate single column mobile grid) */
 
   .service-card {
     padding: 20px;
@@ -305,5 +298,42 @@ img {
   
   .trust-badge {
     width: 100%;
+  }
+}
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  /* 2 columns on mobile */
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  /* Reduce card sizes proportionally */
+  .service-card {
+    padding: 15px;
+    border-radius: 12px;
+  }
+  
+  .service-icon {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .service-title {
+    font-size: 1rem;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  
+  .service-desc-ta {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .service-btn {
+    padding: 8px;
+    font-size: 0.85rem;
+    min-height: auto;
   }
 }
