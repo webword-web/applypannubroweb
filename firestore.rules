@@ -4,7 +4,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // Helper to check if user is logged in
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null && request.auth.uid == 'qrGpLDmLq8Pw9fAcOMuHv5Jahhp2';
     }
 
     // Services collection: Anyone can read, only authenticated admins can write

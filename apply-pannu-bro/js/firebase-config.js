@@ -6,12 +6,13 @@
  */
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCvqcAbVqAvPDckrc-y8i5o5fxvdgFnISE",
+  authDomain: "apply-pannu-bro.firebaseapp.com",
+  projectId: "apply-pannu-bro",
+  storageBucket: "apply-pannu-bro.firebasestorage.app",
+  messagingSenderId: "417505534076",
+  appId: "1:417505534076:web:99eb725dd7afbf14e7e9f9",
+  measurementId: "G-0FFB2BYKQQ"
 };
 
 // Initialize Firebase
