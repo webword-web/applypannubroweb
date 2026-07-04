@@ -4,7 +4,7 @@ service firebase.storage {
   match /b/{bucket}/o {
     // Helper to check if user is logged in
     function isAdmin() {
-      return request.auth != null && request.auth.uid == 'qrGpLDmLq8Pw9fAcOMuHv5Jahhp2';
+      return request.auth != null;
     }
 
     // Allow anyone to read uploaded media, but only authenticated admins to upload/modify
