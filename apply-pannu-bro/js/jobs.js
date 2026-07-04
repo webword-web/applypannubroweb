@@ -1,45 +1,58 @@
-// This file contains all the job postings for the "Job Updates" feature.
-// You can edit, add, or remove jobs from the array below.
-// The website will automatically update without any HTML changes.
-
 const jobsData = [
   {
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop",
-    title: "Software Engineer - Government IT",
-    description: "Looking for an experienced software engineer for a central government project. Immediate hiring.",
-    whatsapp: "Hi, I am interested in applying for the 'Software Engineer - Government IT' job position."
+    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=600&auto=format&fit=crop",
+    title: "Tamil Nadu Village Assistant Recruitment 2026",
+    category: "Government",
+    location: "Tamil Nadu",
+    qualification: "10th Pass",
+    lastDate: "Apply Soon",
+    whatsapp: "Hi, I want to apply for Tamil Nadu Village Assistant Recruitment 2026. Please share the complete details."
   },
   {
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop",
-    title: "Bank Clerk - SBI",
-    description: "SBI announces 5000+ vacancies for Clerk position. Graduation required. Apply before 30th of this month.",
-    whatsapp: "Hi, I am interested in applying for the 'Bank Clerk - SBI' job position."
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=600&auto=format&fit=crop",
+    title: "SBI Junior Associate (Clerk)",
+    category: "Government / Bank",
+    location: "All India",
+    qualification: "Any Degree",
+    lastDate: "25-07-2026",
+    whatsapp: "Hi, I want to apply for SBI Junior Associate (Clerk). Please share the complete details."
   },
   {
     image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=600&auto=format&fit=crop",
-    title: "TNPSC Group 4 Notification",
-    description: "TNPSC Group 4 notification released. 10th pass eligible. Age limit 18-32 years. Apply now.",
-    whatsapp: "Hi, I am interested in applying for the 'TNPSC Group 4' job position."
+    title: "TNPSC Group 4 Services",
+    category: "Government",
+    location: "Tamil Nadu",
+    qualification: "10th / 12th / Degree",
+    lastDate: "15-08-2026",
+    whatsapp: "Hi, I want to apply for TNPSC Group 4 Services. Please share the complete details."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop",
+    title: "Railway Recruitment Board (RRB) NTPC",
+    category: "Government / Railway",
+    location: "All India",
+    qualification: "12th / Degree",
+    lastDate: "30-07-2026",
+    whatsapp: "Hi, I want to apply for Railway Recruitment Board (RRB) NTPC. Please share the complete details."
   },
   {
     image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=600&auto=format&fit=crop",
-    title: "Data Entry Operator",
-    description: "Private IT company hiring data entry operators. Freshers can apply. Salary up to 20k.",
-    whatsapp: "Hi, I am interested in applying for the 'Data Entry Operator' job position."
+    title: "HDFC Bank Customer Service Executive",
+    category: "Private",
+    location: "Chennai / Coimbatore",
+    qualification: "Any Degree",
+    lastDate: "Walk-in",
+    whatsapp: "Hi, I want to apply for HDFC Bank Customer Service Executive. Please share the complete details."
   },
   {
-    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=600&auto=format&fit=crop",
-    title: "Railway Group D",
-    description: "Railway Recruitment Board (RRB) announces new vacancies for Group D. Apply via our center today.",
-    whatsapp: "Hi, I am interested in applying for the 'Railway Group D' job position."
-  },
-  {
-    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=600&auto=format&fit=crop",
-    title: "Marketing Executive",
-    description: "Leading private bank hiring marketing executives. Any degree. Incentive based job.",
-    whatsapp: "Hi, I am interested in applying for the 'Marketing Executive' job position."
+    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop",
+    title: "IT Support Engineer - TCS",
+    category: "Private",
+    location: "Chennai / Bangalore",
+    qualification: "B.E / B.Tech / BCA",
+    lastDate: "Apply Soon",
+    whatsapp: "Hi, I want to apply for IT Support Engineer - TCS. Please share the complete details."
   }
 ];
 
-// Attach to window object for global access
 window.jobsData = jobsData;

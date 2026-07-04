@@ -94,10 +94,33 @@ document.addEventListener('DOMContentLoaded', () => {
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
+    .job-card-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
     .job-card-img {
       width: 100%;
-      height: 180px;
+      height: 100%;
       object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .job-card:hover .job-card-img {
+      transform: scale(1.05);
+    }
+    .job-card-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: var(--primary-color, #2563eb);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      z-index: 2;
     }
     .job-card-body {
       padding: 20px;
@@ -106,16 +129,30 @@ document.addEventListener('DOMContentLoaded', () => {
       flex-direction: column;
     }
     .job-card-title {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       color: #1f2937;
+      line-height: 1.4;
     }
-    .job-card-desc {
-      font-size: 0.95rem;
-      color: #4b5563;
+    .job-card-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #4b5563;
       flex-grow: 1;
+    }
+    .job-card-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .job-card-detail-item i {
+      color: var(--primary-color, #2563eb);
+      width: 16px;
+      text-align: center;
     }
     .job-card-btn {
       width: 100%;
@@ -152,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         width: 95%;
         padding: 20px 15px;
       }
-      .job-card-img {
+      .job-card-img-wrapper {
         height: 150px;
       }
     }
@@ -195,10 +232,17 @@ document.addEventListener('DOMContentLoaded', () => {
       
       html += \`
         <div class="job-card">
-          <img src="\${job.image}" alt="\${job.title}" class="job-card-img">
+          <div class="job-card-img-wrapper">
+            <span class="job-card-badge">\${job.category}</span>
+            <img src="\${job.image}" alt="\${job.title}" class="job-card-img">
+          </div>
           <div class="job-card-body">
             <h3 class="job-card-title">\${job.title}</h3>
-            <p class="job-card-desc">\${job.description}</p>
+            <div class="job-card-details">
+              <div class="job-card-detail-item"><i class="fa-solid fa-location-dot"></i> <span>\${job.location}</span></div>
+              <div class="job-card-detail-item"><i class="fa-solid fa-graduation-cap"></i> <span>\${job.qualification}</span></div>
+              <div class="job-card-detail-item"><i class="fa-solid fa-calendar-days"></i> <span>Last Date: \${job.lastDate}</span></div>
+            </div>
             <a href="\${waLink}" target="_blank" class="job-card-btn">
               <i class="fa-brands fa-whatsapp"></i> Apply Now
             </a>
