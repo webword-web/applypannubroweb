@@ -19,12 +19,12 @@ if (typeof firebase !== 'undefined') {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
-  
+
   // Expose services globally for index/admin page scripts
   window.auth = firebase.auth();
   window.db = firebase.firestore();
   window.storage = firebase.storage();
-  
+
   console.log("Firebase initialized successfully.");
 } else {
   console.error("Firebase SDK is not loaded. Please ensure script tags are present in the HTML.");
