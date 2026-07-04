@@ -6,7 +6,7 @@
  */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCvqcAbVqAvPDckrc-y8i5o5fxvdgFnISE",
+  apiKey: "AIzaSyCwwJPU3sJm0h-sOneIgCyDIKymMq5CMWA",
   authDomain: "apply-pannu-bro.firebaseapp.com",
   projectId: "apply-pannu-bro",
   storageBucket: "apply-pannu-bro.firebasestorage.app",
