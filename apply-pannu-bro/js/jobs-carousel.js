@@ -1,84 +1,13 @@
 // Job Updates Carousel Logic
-// Reads from window.jobsData
+// Reads from window.jobsData and renders into #job-slider
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Inject CSS for Job Carousel Modal
+  const track = document.getElementById('job-slider');
+  if (!track) return; // If the container doesn't exist, do nothing
+
+  // Inject CSS for Job Cards
   const style = document.createElement('style');
   style.innerHTML = `
-    .jobs-modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
-    }
-    .jobs-modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    .jobs-modal-content {
-      background: var(--bg-color, #ffffff);
-      width: 90%;
-      max-width: 1000px;
-      border-radius: 20px;
-      padding: 30px;
-      position: relative;
-      transform: translateY(20px) scale(0.95);
-      transition: all 0.3s ease;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      overflow: hidden;
-    }
-    .jobs-modal-overlay.active .jobs-modal-content {
-      transform: translateY(0) scale(1);
-    }
-    .jobs-modal-close {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--text-color, #333);
-      background: rgba(0,0,0,0.05);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s;
-      z-index: 10;
-    }
-    .jobs-modal-close:hover {
-      background: rgba(0,0,0,0.1);
-    }
-    .jobs-modal-header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .jobs-modal-header h2 {
-      font-size: 2rem;
-      color: var(--primary-color, #2563eb);
-      margin-bottom: 10px;
-    }
-    
-    /* Carousel Styles */
-    .jobs-carousel-container {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      padding: 10px 0;
-    }
-    .jobs-carousel-track {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      gap: 20px;
-    }
     .job-card {
       min-width: calc(33.333% - 13.333px);
       background: #fff;
@@ -185,10 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .job-card {
         min-width: 100%;
       }
-      .jobs-modal-content {
-        width: 95%;
-        padding: 20px 15px;
-      }
       .job-card-img-wrapper {
         height: 150px;
       }
@@ -196,52 +121,26 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.head.appendChild(style);
 
-  // Create Modal HTML
-  const modalHTML = `
-    <div id="jobs-modal" class="jobs-modal-overlay">
-      <div class="jobs-modal-content">
-        <div id="jobs-modal-close" class="jobs-modal-close">
-          <i class="fa-solid fa-xmark"></i>
-        </div>
-        <div class="jobs-modal-header">
-          <h2>Latest Job Updates</h2>
-          <p>Find the best government and private sector jobs here.</p>
-        </div>
-        <div class="jobs-carousel-container">
-          <div id="jobs-carousel-track" class="jobs-carousel-track">
-            <!-- Jobs injected here -->
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-  const modal = document.getElementById('jobs-modal');
-  const closeBtn = document.getElementById('jobs-modal-close');
-  const track = document.getElementById('jobs-carousel-track');
-  const jobUpdatesBtn = document.getElementById('btn-job-updates');
-
   // Inject jobs if data exists
   if (window.jobsData && window.jobsData.length > 0) {
     let html = '';
     window.jobsData.forEach(job => {
       // Get base whatsapp number from adminData or default
-      const waNumber = window.adminData ? window.adminData.contacts.whatsappNumber : "918525041700";
+      const waNumber = window.adminData && window.adminData.contacts ? window.adminData.contacts.whatsappNumber : "918525041700";
       const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(job.whatsapp)}`;
       
       html += `
         <div class="job-card">
           <div class="job-card-img-wrapper">
-            <span class="job-card-badge">${job.category}</span>
+            <span class="job-card-badge">${job.category || 'Job Updates'}</span>
             <img src="${job.image}" alt="${job.title}" class="job-card-img">
           </div>
           <div class="job-card-body">
             <h3 class="job-card-title">${job.title}</h3>
             <div class="job-card-details">
-              <div class="job-card-detail-item"><i class="fa-solid fa-location-dot"></i> <span>${job.location}</span></div>
-              <div class="job-card-detail-item"><i class="fa-solid fa-graduation-cap"></i> <span>${job.qualification}</span></div>
-              <div class="job-card-detail-item"><i class="fa-solid fa-calendar-days"></i> <span>Last Date: ${job.lastDate}</span></div>
+              <div class="job-card-detail-item"><i class="fa-solid fa-location-dot"></i> <span>${job.location || 'Not Specified'}</span></div>
+              <div class="job-card-detail-item"><i class="fa-solid fa-graduation-cap"></i> <span>${job.qualification || 'Not Specified'}</span></div>
+              <div class="job-card-detail-item"><i class="fa-solid fa-calendar-days"></i> <span>Last Date: ${job.lastDate || 'Apply Soon'}</span></div>
             </div>
             <a href="${waLink}" target="_blank" class="job-card-btn">
               <i class="fa-brands fa-whatsapp"></i> Apply Now
@@ -251,6 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     });
     track.innerHTML = html;
+  } else {
+    track.innerHTML = '<p style="text-align: center; width: 100%; padding: 20px;">No job updates available at the moment.</p>';
   }
 
   // Carousel Logic
@@ -274,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Calculate transform percentage
-    // card width + gap. If 3 cards, width is 33.33%, gap is 20px. 
     const cards = track.querySelectorAll('.job-card');
     if(cards.length > 0) {
       const cardWidth = cards[0].offsetWidth;
@@ -301,36 +201,25 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCarousel();
   });
 
-  // Modal Events
+  // Pause on hover
+  track.addEventListener('mouseenter', stopCarousel);
+  track.addEventListener('mouseleave', startCarousel);
+
+  // Start initially
+  setTimeout(() => {
+    updateCarousel();
+    startCarousel();
+  }, 100);
+
+  // Link the hero button to scroll to this section instead of opening a modal
+  const jobUpdatesBtn = document.getElementById('btn-job-updates');
   if (jobUpdatesBtn) {
     jobUpdatesBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      modal.classList.add('active');
-      setTimeout(() => {
-        updateCarousel(); // Ensure correct size after modal display
-        startCarousel();
-      }, 100);
+      const section = document.querySelector('.job-updates-section');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
   }
-
-  closeBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-    stopCarousel();
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
-      stopCarousel();
-    }
-  });
-  
-  // Pause on hover
-  track.addEventListener('mouseenter', stopCarousel);
-  track.addEventListener('mouseleave', () => {
-    if (modal.classList.contains('active')) {
-      startCarousel();
-    }
-  });
-
 });
