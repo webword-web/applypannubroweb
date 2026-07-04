@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const speed = 0.8; // Pixels per frame
 
   // Real-time listener for testimonials
-  window.db.collection('testimonials').orderBy('orderIndex').onSnapshot((snapshot) => {
+  const snapshot = []; snapshot.forEach = function(cb) { }; // DB Removed 
+ {
     // Stop previous animation loop
     if (animationId) {
       cancelAnimationFrame(animationId);
