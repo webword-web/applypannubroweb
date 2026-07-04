@@ -145,33 +145,29 @@
 
   <script src="js/main.js"></script>
   <script>
-    // Logic to populate details from URL param using Firestore
+    // Logic to populate details from URL param using static data
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get('id');
       
-      if (id && typeof window.db !== 'undefined') {
-        window.db.collection('services').doc(id).onSnapshot((doc) => {
-          if (doc.exists) {
-            const service = doc.data();
-            document.title = `${service.title} | APPLY PANNU BRO`;
-            document.getElementById('sd-title').innerText = service.title;
-            document.getElementById('sd-desc').innerText = service.desc || 'No description available.';
-            document.getElementById('sd-icon').innerHTML = `<i class="${service.icon || 'fa-solid fa-cog'}"></i>`;
-            document.getElementById('sd-breadcrumb').innerText = service.title;
-            document.getElementById('sd-price').innerText = service.price || '₹0';
-            document.getElementById('sd-category').innerText = service.category;
-            
-            const msg = `வணக்கம், நான் ${service.title} சேவைக்கு விண்ணப்பிக்க விரும்புகிறேன். மேலும் விவரங்களை தெரிவிக்கவும்.\n\nHi, I want to apply for ${service.title}. Please provide more details.`;
-            const applyBtn = document.getElementById('sd-apply-btn');
-            applyBtn.href = `https://wa.me/918525041700?text=${encodeURIComponent(msg)}`;
-          } else {
-            document.getElementById('sd-title').innerText = "Service Not Found";
-            document.getElementById('sd-desc').innerText = "The service you requested does not exist or has been removed.";
-          }
-        }, (error) => {
-          console.error("Error fetching service: ", error);
-        });
+      if (id && window.servicesData) {
+        const service = window.servicesData.find(s => String(s.id) === String(id));
+        if (service) {
+          document.title = `${service.title} | APPLY PANNU BRO`;
+          document.getElementById('sd-title').innerText = service.title;
+          document.getElementById('sd-desc').innerText = service.desc || 'No description available.';
+          document.getElementById('sd-icon').innerHTML = `<i class="${service.icon || 'fa-solid fa-cog'}"></i>`;
+          document.getElementById('sd-breadcrumb').innerText = service.title;
+          document.getElementById('sd-price').innerText = service.price || '₹0';
+          document.getElementById('sd-category').innerText = service.category;
+          
+          const msg = `வணக்கம், நான் ${service.title} சேவைக்கு விண்ணப்பிக்க விரும்புகிறேன். மேலும் விவரங்களை தெரிவிக்கவும்.\n\nHi, I want to apply for ${service.title}. Please provide more details.`;
+          const applyBtn = document.getElementById('sd-apply-btn');
+          applyBtn.href = `https://wa.me/918525041700?text=${encodeURIComponent(msg)}`;
+        } else {
+          document.getElementById('sd-title').innerText = "Service Not Found";
+          document.getElementById('sd-desc').innerText = "The service you requested does not exist or has been removed.";
+        }
       }
     });
   </script>

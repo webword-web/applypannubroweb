@@ -1,6 +1,6 @@
 /**
  * APPLY PANNU BRO - Service Filter & Grid Renderer
- * Fetches services from Firestore in real-time and renders the grid.
+ * Pure static version — loads services from window.servicesData
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,8 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!servicesGrid) return;
 
-  // Global live services array, updated by Firestore snapshot
-  window._liveServices = [];
+  // -------------------------------------------------------
+  // Get services from the built-in window.servicesData array
+  // Each service gets a default status of 'available'
+  // -------------------------------------------------------
+  function getLiveServices() {
+    return (window.servicesData || []).map(s => ({
+      ...s,
+      status: s.status || 'available',
+      visible: s.visible !== undefined ? s.visible : true
+    }));
+  }
+
+  // Populate global live services for search.js to use
+  window._liveServices = getLiveServices();
 
   // -------------------------------------------------------
   // Status badge HTML
@@ -69,56 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // -------------------------------------------------------
-  // Firestore Real-time Listener
+  // Initial render — immediate, no loading state
   // -------------------------------------------------------
-  if (typeof window.db !== 'undefined') {
-    // Show loading state
-    servicesGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-secondary);"><i class="fa-solid fa-spinner fa-spin" style="font-size:2rem;margin-bottom:15px;display:block;color:var(--primary-color);"></i>Loading services...</div>';
-
-    window.db.collection('services').orderBy('orderIndex').onSnapshot((snapshot) => {
-      const services = [];
-      snapshot.forEach(doc => {
-        services.push({ id: doc.id, ...doc.data() });
-      });
-
-      window._liveServices = services;
-
-      // Get current active filter
-      const activeFilterBtn = document.querySelector('.filter-btn.active');
-      const activeCategory = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'All';
-
-      // Get current search query
-      const searchInput = document.getElementById('service-search');
-      const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
-
-      let filtered = services;
-
-      // Apply category filter
-      if (activeCategory !== 'All') {
-        filtered = filtered.filter(s => s.category === activeCategory || (s.category && s.category.includes(activeCategory)));
-      }
-
-      // Apply search filter
-      if (searchQuery.length >= 2) {
-        filtered = filtered.filter(s =>
-          s.title.toLowerCase().includes(searchQuery) ||
-          (s.desc && s.desc.toLowerCase().includes(searchQuery))
-        );
-      }
-
-      // On homepage, show only first 12
-      const isHomePage = document.getElementById('home-page-marker') !== null;
-      if (isHomePage) filtered = filtered.slice(0, 12);
-
-      window.renderServices(filtered);
-    }, (error) => {
-      console.error("Firestore services listener error: ", error);
-      servicesGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-secondary);">Failed to load services. Please refresh.</div>';
-    });
-  } else {
-    // Fallback: no Firebase connection
-    servicesGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-secondary);">Database not connected.</div>';
-  }
+  const allServices = getLiveServices();
+  const isHomePage = document.getElementById('home-page-marker') !== null;
+  window.renderServices(isHomePage ? allServices.slice(0, 12) : allServices);
 
   // -------------------------------------------------------
   // Filter Button Click Logic
@@ -129,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
 
       const category = btn.getAttribute('data-filter');
-      let filtered = window._liveServices || [];
+      let filtered = getLiveServices();
 
       if (category !== 'All') {
         filtered = filtered.filter(s => s.category === category || (s.category && s.category.includes(category)));
@@ -145,10 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
       }
 
-      const isHomePage = document.getElementById('home-page-marker') !== null;
-      if (isHomePage) filtered = filtered.slice(0, 12);
-
-      window.renderServices(filtered);
+      window.renderServices(isHomePage ? filtered.slice(0, 12) : filtered);
     });
   });
 });

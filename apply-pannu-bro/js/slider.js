@@ -1,87 +1,93 @@
 /**
- * APPLY PANNU BRO - Customer Reviews Real-time slider
- * Fetches reviews from Firestore in real-time and animates them inside infinite slider
+ * APPLY PANNU BRO - Customer Reviews Slider
+ * Pure static version — uses hardcoded reviews with infinite scroll animation
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.getElementById('dynamic-reviews-track');
   if (!track) return;
 
-  if (typeof window.db === 'undefined') {
-    track.innerHTML = '<div style="text-align:center;width:100%;color:var(--text-secondary);padding:20px;">Database connection issue.</div>';
-    return;
-  }
+  // Static testimonials data
+  const testimonials = [
+    {
+      name: 'Karthik R.',
+      text: 'Apply Pannu Bro made my PAN card process so easy and fast! Very reliable service.',
+      rating: 5,
+      source: 'Google Review'
+    },
+    {
+      name: 'Priya M.',
+      text: 'Best service center for all government certificates. Transparent pricing and expert support.',
+      rating: 5,
+      source: 'Google Review'
+    },
+    {
+      name: 'Suresh K.',
+      text: 'Very quick response on WhatsApp. My FSSAI registration was done without any hassle.',
+      rating: 5,
+      source: 'Google Review'
+    },
+    {
+      name: 'Lakshmi S.',
+      text: 'Got my driving licence renewed through Apply Pannu Bro. Very professional and fast service!',
+      rating: 5,
+      source: 'Google Review'
+    },
+    {
+      name: 'Ravi Kumar',
+      text: 'Excellent service for Aadhaar update. The team guided me through the entire process.',
+      rating: 5,
+      source: 'Google Review'
+    }
+  ];
 
   let animationId = null;
   let pos = 0;
   const speed = 0.8; // Pixels per frame
 
-  // Real-time listener for testimonials
-  const snapshot = []; snapshot.forEach = function(cb) { }; // DB Removed 
- {
-    // Stop previous animation loop
-    if (animationId) {
-      cancelAnimationFrame(animationId);
-      animationId = null;
-    }
+  // Clear loading placeholder
+  track.innerHTML = '';
+  pos = 0;
+  track.style.transform = 'translateX(0px)';
 
-    track.innerHTML = '';
-    pos = 0;
-    track.style.transform = 'translateX(0px)';
-
-    const testimonials = [];
-    snapshot.forEach(doc => {
-      testimonials.push({ id: doc.id, ...doc.data() });
-    });
-
-    if (testimonials.length === 0) {
-      track.innerHTML = '<div style="text-align:center;width:100%;color:var(--text-secondary);padding:20px;">No client reviews yet.</div>';
-      return;
-    }
-
-    // Render original cards
-    testimonials.forEach(t => {
-      const card = document.createElement('div');
-      card.className = 'review-card';
-      
-      const rating = t.rating || 5;
-      const starsHTML = '<i class="fa-solid fa-star"></i>'.repeat(rating);
-      
-      card.innerHTML = `
-        <div class="review-stars">${starsHTML}</div>
-        <p>"${escapeSliderHTML(t.text)}"</p>
-        <div style="margin-top: 15px; font-weight: 600;">- ${escapeSliderHTML(t.name)}</div>
-        <div style="font-size: 0.8rem; color: var(--text-secondary);">${escapeSliderHTML(t.source || 'Google Review')}</div>
-      `;
-      track.appendChild(card);
-    });
-
-    // Clone cards for infinite scrolling loop
-    const originalCards = [...track.querySelectorAll('.review-card')];
-    originalCards.forEach(card => {
-      const clone = card.cloneNode(true);
-      track.appendChild(clone);
-    });
-
-    // Animation Loop
-    function animate() {
-      if (!track._paused) {
-        pos -= speed;
-        // When half of the track has scrolled (all original items), reset pos
-        if (Math.abs(pos) >= track.scrollWidth / 2) {
-          pos = 0;
-        }
-        track.style.transform = `translateX(${pos}px)`;
-      }
-      animationId = requestAnimationFrame(animate);
-    }
-
-    // Start animation
-    animationId = requestAnimationFrame(animate);
-  }, (err) => {
-    console.error("Testimonials slider fetch error: ", err);
-    track.innerHTML = '<div style="text-align:center;width:100%;color:var(--text-secondary);padding:20px;">Failed to load reviews.</div>';
+  // Render original cards
+  testimonials.forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    
+    const starsHTML = '<i class="fa-solid fa-star"></i>'.repeat(t.rating || 5);
+    
+    card.innerHTML = `
+      <div class="review-stars">${starsHTML}</div>
+      <p>"${escapeSliderHTML(t.text)}"</p>
+      <div style="margin-top: 15px; font-weight: 600;">- ${escapeSliderHTML(t.name)}</div>
+      <div style="font-size: 0.8rem; color: var(--text-secondary);">${escapeSliderHTML(t.source || 'Google Review')}</div>
+    `;
+    track.appendChild(card);
   });
+
+  // Clone cards for infinite scrolling loop
+  const originalCards = [...track.querySelectorAll('.review-card')];
+  originalCards.forEach(card => {
+    const clone = card.cloneNode(true);
+    track.appendChild(clone);
+  });
+
+  // Animation Loop
+  function animate() {
+    if (!track._paused) {
+      pos -= speed;
+      // When half of the track has scrolled (all original items), reset pos
+      if (Math.abs(pos) >= track.scrollWidth / 2) {
+        pos = 0;
+      }
+      track.style.transform = `translateX(${pos}px)`;
+    }
+    animationId = requestAnimationFrame(animate);
+  }
+
+  // Start animation
+  animationId = requestAnimationFrame(animate);
 
   // Pause scrolling on mouse hover
   const container = document.querySelector('.reviews-container');
