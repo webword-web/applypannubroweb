@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.head.appendChild(style);
 
   // Create Modal HTML
-  const modalHTML = \`
+  const modalHTML = `
     <div id="jobs-modal" class="jobs-modal-overlay">
       <div class="jobs-modal-content">
         <div id="jobs-modal-close" class="jobs-modal-close">
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     </div>
-  \`;
+  `;
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 
   const modal = document.getElementById('jobs-modal');
@@ -228,27 +228,27 @@ document.addEventListener('DOMContentLoaded', () => {
     window.jobsData.forEach(job => {
       // Get base whatsapp number from adminData or default
       const waNumber = window.adminData ? window.adminData.contacts.whatsappNumber : "918525041700";
-      const waLink = \`https://wa.me/\${waNumber}?text=\${encodeURIComponent(job.whatsapp)}\`;
+      const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(job.whatsapp)}`;
       
-      html += \`
+      html += `
         <div class="job-card">
           <div class="job-card-img-wrapper">
-            <span class="job-card-badge">\${job.category}</span>
-            <img src="\${job.image}" alt="\${job.title}" class="job-card-img">
+            <span class="job-card-badge">${job.category}</span>
+            <img src="${job.image}" alt="${job.title}" class="job-card-img">
           </div>
           <div class="job-card-body">
-            <h3 class="job-card-title">\${job.title}</h3>
+            <h3 class="job-card-title">${job.title}</h3>
             <div class="job-card-details">
-              <div class="job-card-detail-item"><i class="fa-solid fa-location-dot"></i> <span>\${job.location}</span></div>
-              <div class="job-card-detail-item"><i class="fa-solid fa-graduation-cap"></i> <span>\${job.qualification}</span></div>
-              <div class="job-card-detail-item"><i class="fa-solid fa-calendar-days"></i> <span>Last Date: \${job.lastDate}</span></div>
+              <div class="job-card-detail-item"><i class="fa-solid fa-location-dot"></i> <span>${job.location}</span></div>
+              <div class="job-card-detail-item"><i class="fa-solid fa-graduation-cap"></i> <span>${job.qualification}</span></div>
+              <div class="job-card-detail-item"><i class="fa-solid fa-calendar-days"></i> <span>Last Date: ${job.lastDate}</span></div>
             </div>
-            <a href="\${waLink}" target="_blank" class="job-card-btn">
+            <a href="${waLink}" target="_blank" class="job-card-btn">
               <i class="fa-brands fa-whatsapp"></i> Apply Now
             </a>
           </div>
         </div>
-      \`;
+      `;
     });
     track.innerHTML = html;
   }
@@ -275,14 +275,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Calculate transform percentage
     // card width + gap. If 3 cards, width is 33.33%, gap is 20px. 
-    // It's easier to just translate by index * (100 / cardsPerView)% roughly, but with gap it's specific.
-    // The gap is handled by the flex-basis/min-width in CSS.
-    // Formula: index * (card width + gap)
     const cards = track.querySelectorAll('.job-card');
     if(cards.length > 0) {
       const cardWidth = cards[0].offsetWidth;
       const gap = 20;
-      track.style.transform = \`translateX(-\${currentIndex * (cardWidth + gap)}px)\`;
+      track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
     }
   }
 
