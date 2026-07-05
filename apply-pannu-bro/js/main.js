@@ -66,7 +66,12 @@ window.servicesData = [
   { id: 57, title: 'Bus Ticket Booking', category: 'Booking', icon: 'fa-solid fa-bus-simple', desc: 'பேருந்து டிக்கெட்', price: 'Custom' },
   { id: 58, title: 'Flight Ticket Booking', category: 'Booking', icon: 'fa-solid fa-plane-up', desc: 'விமான டிக்கெட்', price: 'Custom' },
   { id: 59, title: 'Hotel Booking', category: 'Booking', icon: 'fa-solid fa-bed', desc: 'ஹோட்டல் டிக்கெட்', price: 'Custom' },
-  { id: 60, title: 'Visa Assistance', category: 'Travel', icon: 'fa-solid fa-earth-americas', desc: 'விசா உதவி', price: 'Custom' }
+  { id: 60, title: 'Visa Assistance', category: 'Travel', icon: 'fa-solid fa-earth-americas', desc: 'விசா உதவி', price: 'Custom' },
+
+  // PF Services (61-63)
+  { id: 61, title: 'PF Withdrawal (EPF Claim)', category: 'PF Services', icon: 'fa-solid fa-piggy-bank', desc: 'பிபிஎஃப் திரும்ப பெற விண்ணப்பிக்க', price: '₹500' },
+  { id: 62, title: 'UAN Activation & PF Balance', category: 'PF Services', icon: 'fa-solid fa-id-badge', desc: 'UAN செயல்படுத்த & PF இருப்பு பார்க்க', price: '₹100' },
+  { id: 63, title: 'EPF Transfer (Job Change)', category: 'PF Services', icon: 'fa-solid fa-arrows-rotate', desc: 'வேலை மாற்றத்தில் PF transfer செய்ய', price: '₹300' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
