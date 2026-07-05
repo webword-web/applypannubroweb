@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const track = document.getElementById('job-slider');
   if (!track) return; // If the container doesn't exist, do nothing
 
-  // Inject CSS for Job Cards
+  // Inject CSS for Job Cards (maintained from original for exact style consistency)
   const style = document.createElement('style');
   style.innerHTML = `
     .job-card {
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       color: white;
     }
     
-    /* Responsive */
+    /* Responsive overrides (will be further customized for jobs page view) */
     @media (max-width: 992px) {
       .job-card {
         min-width: calc(50% - 10px);
@@ -123,17 +123,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inject jobs if data exists
   if (window.jobsData && window.jobsData.length > 0) {
+    const jobs = window.jobsData;
+    const totalJobs = jobs.length;
     let html = '';
-    window.jobsData.forEach(job => {
-      // Get base whatsapp number from adminData or default
-      const waNumber = window.adminData && window.adminData.contacts ? window.adminData.contacts.whatsappNumber : "918525041700";
+
+    // Get base whatsapp number from adminData or default
+    const waNumber = window.adminData && window.adminData.contacts ? window.adminData.contacts.whatsappNumber : "918525041700";
+
+    // Helper function to build job card HTML
+    function buildCardHtml(job) {
       const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(job.whatsapp)}`;
-      
-      html += `
+      return `
         <div class="job-card">
           <div class="job-card-img-wrapper">
             <span class="job-card-badge">${job.category || 'Job Updates'}</span>
-            <img src="${job.image}" alt="${job.title}" class="job-card-img">
+            <img src="${job.image}" alt="${job.title}" class="job-card-img" loading="lazy">
           </div>
           <div class="job-card-body">
             <h3 class="job-card-title">${job.title}</h3>
@@ -148,78 +152,161 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       `;
-    });
+    }
+
+    if (totalJobs > 1) {
+      // Cloned last job (preposed)
+      html += buildCardHtml(jobs[totalJobs - 1]);
+      // Real jobs
+      jobs.forEach(job => {
+        html += buildCardHtml(job);
+      });
+      // Cloned first job (appended)
+      html += buildCardHtml(jobs[0]);
+    } else {
+      // If only 1 job, render without cloning
+      html += buildCardHtml(jobs[0]);
+    }
+
     track.innerHTML = html;
-  } else {
-    track.innerHTML = '<p style="text-align: center; width: 100%; padding: 20px;">No job updates available at the moment.</p>';
-  }
 
-  // Carousel Logic
-  let currentIndex = 0;
-  let intervalId = null;
-
-  function getCardsPerView() {
-    if (window.innerWidth <= 600) return 1;
-    if (window.innerWidth <= 992) return 2;
-    return 3;
-  }
-
-  function updateCarousel() {
-    if (!window.jobsData || window.jobsData.length === 0) return;
-    const cardsPerView = getCardsPerView();
-    const maxIndex = window.jobsData.length - cardsPerView;
-    
-    // Auto loop
-    if (currentIndex > maxIndex) {
-      currentIndex = 0; // Reset to start
+    // If 1 or fewer jobs, hide carousel controls
+    if (totalJobs <= 1) {
+      const prevBtn = document.getElementById('carousel-prev-btn');
+      const nextBtn = document.getElementById('carousel-next-btn');
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      return;
     }
-    
-    // Calculate transform percentage
-    const cards = track.querySelectorAll('.job-card');
-    if(cards.length > 0) {
-      const cardWidth = cards[0].offsetWidth;
-      const gap = 20;
-      track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
+
+    // Carousel Configuration
+    let currentIndex = 1; // Start at the first real job card
+    let isTransitioning = false;
+    let autoSlideInterval = null;
+
+    // Initialize track positioning
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-100%)`;
+    // Force layout reflow
+    track.offsetHeight;
+    track.style.transition = '';
+
+    function moveToSlide(index) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+      currentIndex = index;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
-  }
 
-  function startCarousel() {
-    if (intervalId) clearInterval(intervalId);
-    intervalId = setInterval(() => {
-      currentIndex++;
-      updateCarousel();
-    }, 4000); // 4 seconds auto-slide
-  }
-
-  function stopCarousel() {
-    if (intervalId) clearInterval(intervalId);
-  }
-
-  // Handle Resize
-  window.addEventListener('resize', () => {
-    currentIndex = 0;
-    updateCarousel();
-  });
-
-  // Pause on hover
-  track.addEventListener('mouseenter', stopCarousel);
-  track.addEventListener('mouseleave', startCarousel);
-
-  // Start initially
-  setTimeout(() => {
-    updateCarousel();
-    startCarousel();
-  }, 100);
-
-  // Link the hero button to scroll to this section instead of opening a modal
-  const jobUpdatesBtn = document.getElementById('btn-job-updates');
-  if (jobUpdatesBtn) {
-    jobUpdatesBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const section = document.querySelector('.job-updates-section');
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Listen to transition end to handle loop resets
+    track.addEventListener('transitionend', () => {
+      isTransitioning = false;
+      if (currentIndex === 0) {
+        // Jump to last real job
+        track.style.transition = 'none';
+        currentIndex = totalJobs;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      } else if (currentIndex === totalJobs + 1) {
+        // Jump to first real job
+        track.style.transition = 'none';
+        currentIndex = 1;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
       }
     });
+
+    function nextSlide() {
+      if (isTransitioning) return;
+      moveToSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+      if (isTransitioning) return;
+      moveToSlide(currentIndex - 1);
+    }
+
+    // Button controls
+    const prevBtn = document.getElementById('carousel-prev-btn');
+    const nextBtn = document.getElementById('carousel-next-btn');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetAutoPlay();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetAutoPlay();
+      });
+    }
+
+    // Touch Swipe Support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    track.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    track.addEventListener('touchmove', (e) => {
+      touchEndX = e.touches[0].clientX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => {
+      const threshold = 50; // swipe length in pixels
+      const swipeDistance = touchStartX - touchEndX;
+
+      if (Math.abs(swipeDistance) > threshold) {
+        if (swipeDistance > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+        resetAutoPlay();
+      }
+      touchStartX = 0;
+      touchEndX = 0;
+    });
+
+    // Auto sliding timer (4 seconds interval)
+    function startAutoPlay() {
+      if (autoSlideInterval) clearInterval(autoSlideInterval);
+      autoSlideInterval = setInterval(() => {
+        nextSlide();
+      }, 4000);
+    }
+
+    // Stop sliding timer
+    function stopAutoPlay() {
+      if (autoSlideInterval) clearInterval(autoSlideInterval);
+    }
+
+    function resetAutoPlay() {
+      stopAutoPlay();
+      startAutoPlay();
+    }
+
+    // Pause on hover
+    track.addEventListener('mouseenter', stopAutoPlay);
+    track.addEventListener('mouseleave', startAutoPlay);
+
+    // Initial Start
+    startAutoPlay();
+
+    // Re-align on resize
+    window.addEventListener('resize', () => {
+      track.style.transition = 'none';
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    });
+
+  } else {
+    track.innerHTML = '<p style="text-align: center; width: 100%; padding: 40px; color: var(--text-secondary);">No job updates available at the moment.</p>';
+    const prevBtn = document.getElementById('carousel-prev-btn');
+    const nextBtn = document.getElementById('carousel-next-btn');
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
   }
 });

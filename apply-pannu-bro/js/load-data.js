@@ -138,10 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 6. Footer
   const footerDesc = document.querySelector('footer p');
-  if (footerDesc && data.footer.description) {
-    // Select the first paragraph in the footer that contains the description
-    // using a specific selector might be safer, but based on the HTML this should work
-    document.querySelector('.footer-col:first-child p').textContent = data.footer.description;
+  const footerColP = document.querySelector('.footer-col:first-child p');
+  if (footerDesc && footerColP && data.footer.description) {
+    footerColP.textContent = data.footer.description;
   }
   
   const currentYear = document.getElementById('current-year');

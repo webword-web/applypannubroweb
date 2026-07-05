@@ -371,6 +371,31 @@ header {
   color: #fff;
 }
 
+.btn-job-updates {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.35);
+  min-width: 160px;
+  justify-content: center;
+  animation: pulse-orange 2s infinite;
+}
+.btn-job-updates:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(245, 158, 11, 0.5);
+  color: #fff;
+}
+
 /* =====================================================
    Floating Contact FAB
    ===================================================== */
@@ -902,4 +927,110 @@ footer {
 .review-stars {
   color: #fbbf24;
   margin-bottom: 15px;
+}
+
+/* =====================================================
+   Job Updates Page Carousel
+   ==================================================== */
+.carousel-outer-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 0;
+}
+
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--surface-color);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.carousel-nav-btn:hover {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-lg);
+}
+
+.carousel-nav-btn.prev-btn {
+  left: -60px;
+}
+
+.carousel-nav-btn.next-btn {
+  right: -60px;
+}
+
+.jobs-page-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+}
+
+.jobs-page-carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  width: 100%;
+}
+
+/* Card sizing overrides for 1-by-1 slider */
+.jobs-page-carousel-track .job-card {
+  min-width: 100% !important;
+  flex: 0 0 100% !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+.jobs-page-carousel-track .job-card-img-wrapper {
+  height: 280px !important;
+}
+
+/* Mobile responsive navigation placement */
+@media (max-width: 768px) {
+  .carousel-nav-btn.prev-btn {
+    left: -15px;
+  }
+  .carousel-nav-btn.next-btn {
+    right: -15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-nav-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+  .carousel-nav-btn.prev-btn {
+    left: 10px;
+    background: rgba(255, 255, 255, 0.85);
+  }
+  .carousel-nav-btn.next-btn {
+    right: 10px;
+    background: rgba(255, 255, 255, 0.85);
+  }
+  [data-theme="dark"] .carousel-nav-btn.prev-btn,
+  [data-theme="dark"] .carousel-nav-btn.next-btn {
+    background: rgba(30, 41, 59, 0.85);
+  }
+  .jobs-page-carousel-track .job-card-img-wrapper {
+    height: 200px !important;
+  }
 }

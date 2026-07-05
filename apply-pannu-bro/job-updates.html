@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Government & Private Job Updates | APPLY PANNU BRO</title>
+  <meta name="description"
+    content="Stay updated with the latest government and private job notifications. Apply easily and get complete details.">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS Links -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animation.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+  <!-- Loading Spinner -->
+  <div id="loader" class="loader-container">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <h1>Apply Pannu Bro</h1>
+        <span class="logo-tagline">Net Centre <span class="tagline-sep">|</span> ஆன்லைன் சேவை மையம்</span>
+      </a>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Side Drawer Menu -->
+  <div id="mobile-nav" class="mobile-nav">
+    <div class="menu-top">
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+        <i class="fa-solid fa-moon"></i> Theme
+      </button>
+      <button id="close-menu-btn" class="close-menu-btn" aria-label="Close Menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#why-us">Why Choose Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="menu-bottom">
+      <a href="admin.html" class="btn btn-primary admin-btn"><i class="fa-solid fa-lock"></i> Admin Login</a>
+    </div>
+  </div>
+
+  <!-- Hero / Banner Section -->
+  <div style="padding: 140px 0 60px; background: var(--surface-color); border-bottom: 1px solid var(--border-color); text-align: center;">
+    <div class="container fade-in-up">
+      <h1 class="section-title">Government & Private Job Updates</h1>
+      <p class="section-subtitle" style="margin-bottom: 0;">Stay updated with the latest notifications and apply instantly.</p>
+    </div>
+  </div>
+
+  <!-- Carousel Section -->
+  <section class="section-padding" style="background: var(--bg-color); min-height: 60vh; display: flex; align-items: center; justify-content: center; padding: 40px 0;">
+    <div class="container fade-in-up delay-100" style="max-width: 500px; width: 100%;">
+      
+      <div class="carousel-outer-wrapper">
+        
+        <!-- Prev Arrow -->
+        <button id="carousel-prev-btn" class="carousel-nav-btn prev-btn" aria-label="Previous job update">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <!-- Viewport -->
+        <div class="jobs-page-carousel-viewport">
+          <div id="job-slider" class="jobs-page-carousel-track">
+            <!-- Jobs injected dynamically by js/jobs-carousel.js -->
+          </div>
+        </div>
+
+        <!-- Next Arrow -->
+        <button id="carousel-next-btn" class="carousel-nav-btn next-btn" aria-label="Next job update">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="copyright">
+        <p>&copy; <span id="current-year"></span> APPLY PANNU BRO. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Contact FAB -->
+  <div class="fab-wrapper" id="fab-wrapper">
+    <!-- Expandable contact menu -->
+    <div class="fab-menu" id="fab-menu">
+      <a href="tel:+918525041700" class="fab-item fab-item-call dynamic-phone-link">
+        <span class="fab-label">Call</span>
+        <div class="fab-icon-circle fab-call"><i class="fa-solid fa-phone"></i></div>
+      </a>
+      <a href="https://wa.me/918525041700" target="_blank" class="fab-item fab-item-wa dynamic-whatsapp-link">
+        <span class="fab-label">WhatsApp</span>
+        <div class="fab-icon-circle fab-wa"><i class="fa-brands fa-whatsapp"></i></div>
+      </a>
+      <a href="https://www.instagram.com/applypannubro?igsh=MXg4M3Z2eHZqcTFlZQ==" target="_blank" class="fab-item fab-item-ig">
+        <span class="fab-label">Instagram</span>
+        <div class="fab-icon-circle fab-ig"><i class="fa-brands fa-instagram"></i></div>
+      </a>
+      <a href="https://www.facebook.com/applypannubro" target="_blank" class="fab-item fab-item-fb">
+        <span class="fab-label">Facebook</span>
+        <div class="fab-icon-circle fab-fb"><i class="fa-brands fa-facebook-f"></i></div>
+      </a>
+      <a href="mailto:applypannubro@gmail.com" class="fab-item fab-item-email dynamic-email-link">
+        <span class="fab-label">Email</span>
+        <div class="fab-icon-circle fab-email"><i class="fa-solid fa-envelope"></i></div>
+      </a>
+    </div>
+    <!-- Main FAB toggle button -->
+    <button class="fab-main" id="fab-main" aria-label="Contact Us" aria-expanded="false">
+      <i class="fa-solid fa-headset fab-icon-default"></i>
+      <i class="fa-solid fa-xmark fab-icon-close"></i>
+    </button>
+  </div>
+
+  <!-- JS Links -->
+  <script src="js/admin-data.js"></script>
+  <script src="js/jobs.js"></script>
+  <script src="js/load-data.js"></script>
+  <script src="js/jobs-carousel.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
