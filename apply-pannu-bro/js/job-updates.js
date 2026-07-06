@@ -31,7 +31,7 @@ const FALLBACK_JOBS = [
     eligibility: "ITI, Diploma, B.E/B.Tech",
     lastDate: "29.07.2026",
     lastDateISO: "2026-07-29",
-    applyLink: "https://indianrailways.gov.in/",
+    applyLink: "https://indianraihttps://wa.me/918525041700?text=வணக்கம்,%20நான்%20RRB%20Technician%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20RRB%20Technician%20Recruitment.%20Please%20provide%20more%20details.
     category: "Railway",
     badge: "NEW"
   },
@@ -43,7 +43,7 @@ const FALLBACK_JOBS = [
     eligibility: "Any Degree",
     lastDate: "14.08.2026",
     lastDateISO: "2026-08-14",
-    applyLink: "https://indianrailways.gov.in/",
+    applyLink: "https://https://wa.me/918525041700?text=வணக்கம்,%20நான்%20RRB%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20RRB%20Recruitment.%20Please%20provide%20more%20details.
     category: "Railway",
     badge: "NEW"
   },
@@ -55,7 +55,7 @@ const FALLBACK_JOBS = [
     eligibility: "Any Degree",
     lastDate: "21.07.2026",
     lastDateISO: "2026-07-21",
-    applyLink: "https://www.ibps.in/",
+    applyLink: "https://https://wa.me/918525041700?text=வணக்கம்,%20நான்%20IBPS%20PO/MT%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20IBPS%20PO/MT%20Recruitment.%20Please%20provide%20more%20details.
     category: "Bank",
     badge: "NEW"
   },
@@ -233,37 +233,37 @@ const FALLBACK_JOBS = [
    STATE — holds all jobs and current filter state
    ---------------------------------------------------------------- */
 const state = {
-  allJobs:     [],       // master data
-  filteredJobs:[],       // after filters applied
-  searchTerm:  '',
-  qualFilter:  '',
-  orgFilter:   '',
-  sortOrder:   '',
-  sortCol:     null,     // 'vacancy' | 'date' | null
-  sortDir:     'asc'     // 'asc' | 'desc'
+  allJobs: [],       // master data
+  filteredJobs: [],       // after filters applied
+  searchTerm: '',
+  qualFilter: '',
+  orgFilter: '',
+  sortOrder: '',
+  sortCol: null,     // 'vacancy' | 'date' | null
+  sortDir: 'asc'     // 'asc' | 'desc'
 };
 
 /* ----------------------------------------------------------------
    DOM ELEMENT REFERENCES
    ---------------------------------------------------------------- */
 const DOM = {
-  tableBody:     () => document.getElementById('jobsTableBody'),
-  searchInput:   () => document.getElementById('searchInput'),
-  clearSearch:   () => document.getElementById('clearSearch'),
-  qualFilter:    () => document.getElementById('qualFilter'),
-  orgFilter:     () => document.getElementById('orgFilter'),
-  sortVacancy:   () => document.getElementById('sortVacancy'),
-  resetBtn:      () => document.getElementById('resetFilters'),
-  resultsCount:  () => document.getElementById('resultsCount'),
-  noResults:     () => document.getElementById('noResults'),
-  tableWrapper:  () => document.getElementById('tableWrapper'),
+  tableBody: () => document.getElementById('jobsTableBody'),
+  searchInput: () => document.getElementById('searchInput'),
+  clearSearch: () => document.getElementById('clearSearch'),
+  qualFilter: () => document.getElementById('qualFilter'),
+  orgFilter: () => document.getElementById('orgFilter'),
+  sortVacancy: () => document.getElementById('sortVacancy'),
+  resetBtn: () => document.getElementById('resetFilters'),
+  resultsCount: () => document.getElementById('resultsCount'),
+  noResults: () => document.getElementById('noResults'),
+  tableWrapper: () => document.getElementById('tableWrapper'),
   activeFilters: () => document.getElementById('activeFilters'),
-  totalCount:    () => document.getElementById('totalJobsCount'),
-  statTotal:     () => document.getElementById('statTotal'),
+  totalCount: () => document.getElementById('totalJobsCount'),
+  statTotal: () => document.getElementById('statTotal'),
   statVacancies: () => document.getElementById('statVacancies'),
-  statUrgent:    () => document.getElementById('statUrgent'),
-  statNew:       () => document.getElementById('statNew'),
-  toastContainer:() => document.getElementById('toastContainer'),
+  statUrgent: () => document.getElementById('statUrgent'),
+  statNew: () => document.getElementById('statNew'),
+  toastContainer: () => document.getElementById('toastContainer'),
   copyrightYear: () => document.getElementById('copyrightYear')
 };
 
@@ -278,8 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load data then wire up UI
   loadJobsData()
     .then(jobs => {
-      state.allJobs     = jobs;
-      state.filteredJobs= [...jobs];
+      state.allJobs = jobs;
+      state.filteredJobs = [...jobs];
       renderTable(jobs);
       updateStats(jobs);
       updateTotalCount(jobs.length);
@@ -290,8 +290,8 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('[JobUpdates] Failed to load jobs:', err);
       showToast('Could not load jobs. Showing cached data.', 'error');
       // Use fallback data
-      state.allJobs     = FALLBACK_JOBS;
-      state.filteredJobs= [...FALLBACK_JOBS];
+      state.allJobs = FALLBACK_JOBS;
+      state.filteredJobs = [...FALLBACK_JOBS];
       renderTable(FALLBACK_JOBS);
       updateStats(FALLBACK_JOBS);
       updateTotalCount(FALLBACK_JOBS.length);
@@ -333,15 +333,15 @@ function renderTable(jobs) {
 
   // Show/hide no-results panel
   const noResults = DOM.noResults();
-  const wrapper   = DOM.tableWrapper();
+  const wrapper = DOM.tableWrapper();
   if (jobs.length === 0) {
     tbody.innerHTML = '';
     if (noResults) noResults.removeAttribute('hidden');
-    if (wrapper)   wrapper.style.display = 'none';
+    if (wrapper) wrapper.style.display = 'none';
     return;
   }
   if (noResults) noResults.setAttribute('hidden', '');
-  if (wrapper)   wrapper.style.display = '';
+  if (wrapper) wrapper.style.display = '';
 
   // Build HTML for all rows
   const html = jobs.map((job, index) => buildRow(job, index)).join('');
@@ -358,11 +358,11 @@ function renderTable(jobs) {
  * @returns {string} HTML string
  */
 function buildRow(job, index) {
-  const badge     = resolveBadge(job);
-  const daysLeft  = getDaysLeft(job.lastDateISO);
+  const badge = resolveBadge(job);
+  const daysLeft = getDaysLeft(job.lastDateISO);
   const isExpired = daysLeft < 0;
-  const isUrgent  = daysLeft >= 0 && daysLeft <= 3;
-  const isToday   = daysLeft === 0;
+  const isUrgent = daysLeft >= 0 && daysLeft <= 3;
+  const isToday = daysLeft === 0;
 
   // Eligibility split into tags
   const eligTags = job.eligibility
@@ -450,9 +450,9 @@ function buildRow(job, index) {
  */
 function resolveBadge(job) {
   const daysLeft = getDaysLeft(job.lastDateISO);
-  if (daysLeft < 0)           return 'EXPIRED';
-  if (daysLeft === 0)         return 'TODAY';
-  if (daysLeft <= 3)          return 'LAST DATE';
+  if (daysLeft < 0) return 'EXPIRED';
+  if (daysLeft === 0) return 'TODAY';
+  if (daysLeft <= 3) return 'LAST DATE';
   return job.badge || 'NEW';
 }
 
@@ -466,9 +466,9 @@ function resolveBadge(job) {
  */
 function getDaysLeft(isoDateStr) {
   if (!isoDateStr) return 999;
-  const today     = new Date();
+  const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const lastDate  = new Date(isoDateStr);
+  const lastDate = new Date(isoDateStr);
   lastDate.setHours(0, 0, 0, 0);
   return Math.round((lastDate - today) / (1000 * 60 * 60 * 24));
 }
@@ -488,7 +488,7 @@ function applyFilters() {
     const term = state.searchTerm.toLowerCase();
     jobs = jobs.filter(j =>
       j.organization.toLowerCase().includes(term) ||
-      j.eligibility.toLowerCase().includes(term)  ||
+      j.eligibility.toLowerCase().includes(term) ||
       j.category.toLowerCase().includes(term)
     );
   }
@@ -543,12 +543,12 @@ function applyFilters() {
  * Attaches event listeners to all filter inputs.
  */
 function wireFilters() {
-  const searchEl  = DOM.searchInput();
-  const clearEl   = DOM.clearSearch();
-  const qualEl    = DOM.qualFilter();
-  const orgEl     = DOM.orgFilter();
-  const sortEl    = DOM.sortVacancy();
-  const resetEl   = DOM.resetBtn();
+  const searchEl = DOM.searchInput();
+  const clearEl = DOM.clearSearch();
+  const qualEl = DOM.qualFilter();
+  const orgEl = DOM.orgFilter();
+  const sortEl = DOM.sortVacancy();
+  const resetEl = DOM.resetBtn();
 
   // Search input - live filter with debounce
   if (searchEl) {
@@ -594,7 +594,7 @@ function wireFilters() {
   if (sortEl) {
     sortEl.addEventListener('change', () => {
       state.sortOrder = sortEl.value;
-      state.sortCol   = null; // clear column sort
+      state.sortCol = null; // clear column sort
       clearSortArrows();
       applyFilters();
     });
@@ -612,23 +612,23 @@ function wireFilters() {
 function resetAllFilters() {
   state.searchTerm = '';
   state.qualFilter = '';
-  state.orgFilter  = '';
-  state.sortOrder  = '';
-  state.sortCol    = null;
-  state.sortDir    = 'asc';
+  state.orgFilter = '';
+  state.sortOrder = '';
+  state.sortCol = null;
+  state.sortDir = 'asc';
 
   // Reset UI elements
   const searchEl = DOM.searchInput();
-  const clearEl  = DOM.clearSearch();
-  const qualEl   = DOM.qualFilter();
-  const orgEl    = DOM.orgFilter();
-  const sortEl   = DOM.sortVacancy();
+  const clearEl = DOM.clearSearch();
+  const qualEl = DOM.qualFilter();
+  const orgEl = DOM.orgFilter();
+  const sortEl = DOM.sortVacancy();
 
   if (searchEl) searchEl.value = '';
-  if (clearEl)  clearEl.classList.remove('visible');
-  if (qualEl)   qualEl.value   = '';
-  if (orgEl)    orgEl.value    = '';
-  if (sortEl)   sortEl.value   = '';
+  if (clearEl) clearEl.classList.remove('visible');
+  if (qualEl) qualEl.value = '';
+  if (orgEl) orgEl.value = '';
+  if (sortEl) sortEl.value = '';
 
   clearSortArrows();
   applyFilters();
@@ -749,8 +749,8 @@ function renderActivePills() {
       label: `Sort: ${sortLabel}`,
       clear: () => {
         state.sortOrder = '';
-        state.sortCol   = null;
-        state.sortDir   = 'asc';
+        state.sortCol = null;
+        state.sortDir = 'asc';
         const el = DOM.sortVacancy();
         if (el) el.value = '';
         clearSortArrows();
@@ -781,12 +781,12 @@ function renderActivePills() {
  */
 function getSortLabel() {
   if (state.sortCol === 'vacancy') return `Vacancy (${state.sortDir === 'asc' ? 'Low→High' : 'High→Low'})`;
-  if (state.sortCol === 'date')    return `Last Date (${state.sortDir === 'asc' ? 'Nearest' : 'Farthest'})`;
+  if (state.sortCol === 'date') return `Last Date (${state.sortDir === 'asc' ? 'Nearest' : 'Farthest'})`;
   const map = {
     'vacancy-high': 'Vacancy: High→Low',
-    'vacancy-low':  'Vacancy: Low→High',
-    'date-near':    'Date: Nearest first',
-    'date-far':     'Date: Farthest first'
+    'vacancy-low': 'Vacancy: Low→High',
+    'date-near': 'Date: Nearest first',
+    'date-far': 'Date: Farthest first'
   };
   return map[state.sortOrder] || '';
 }
@@ -800,19 +800,19 @@ function getSortLabel() {
  */
 function updateStats(jobs) {
   const totalVacancies = jobs.reduce((sum, j) => sum + j.vacancy, 0);
-  const urgentCount    = jobs.filter(j => {
+  const urgentCount = jobs.filter(j => {
     const d = getDaysLeft(j.lastDateISO);
     return d >= 0 && d <= 5;
   }).length;
-  const newCount       = jobs.filter(j => {
+  const newCount = jobs.filter(j => {
     const b = resolveBadge(j);
     return b === 'NEW' || b === 'TODAY';
   }).length;
 
-  animateCount(DOM.statTotal(),     jobs.length);
+  animateCount(DOM.statTotal(), jobs.length);
   animateCount(DOM.statVacancies(), totalVacancies);
-  animateCount(DOM.statUrgent(),    urgentCount);
-  animateCount(DOM.statNew(),       newCount);
+  animateCount(DOM.statUrgent(), urgentCount);
+  animateCount(DOM.statNew(), newCount);
 }
 
 /**
@@ -893,10 +893,10 @@ function animateCount(el, target) {
   if (current === target) return;
 
   const duration = 600; // ms
-  const steps    = 30;
-  const step     = (target - current) / steps;
-  let   count    = current;
-  let   i        = 0;
+  const steps = 30;
+  const step = (target - current) / steps;
+  let count = current;
+  let i = 0;
 
   const timer = setInterval(() => {
     count += step;
@@ -936,7 +936,7 @@ function escapeHtml(str) {
  */
 function debounce(fn, delay) {
   let timer;
-  return function(...args) {
+  return function (...args) {
     clearTimeout(timer);
     timer = setTimeout(() => fn.apply(this, args), delay);
   };
