@@ -31,7 +31,7 @@ const FALLBACK_JOBS = [
     eligibility: "ITI, Diploma, B.E/B.Tech",
     lastDate: "29.07.2026",
     lastDateISO: "2026-07-29",
-    applyLink: "https://indianraihttps://wa.me/918525041700?text=வணக்கம்,%20நான்%20RRB%20Technician%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20RRB%20Technician%20Recruitment.%20Please%20provide%20more%20details.
+    applyLink: "https://wa.me/918525041700?text=வணக்கம்,%20நான்%20RRB%20Technician%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20RRB%20Technician%20Recruitment.%20Please%20provide%20more%20details",
     category: "Railway",
     badge: "NEW"
   },
@@ -43,7 +43,7 @@ const FALLBACK_JOBS = [
     eligibility: "Any Degree",
     lastDate: "14.08.2026",
     lastDateISO: "2026-08-14",
-    applyLink: "https://https://wa.me/918525041700?text=வணக்கம்,%20நான்%20RRB%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20RRB%20Recruitment.%20Please%20provide%20more%20details.
+    applyLink: "https://https://wa.me/918525041700?text=வணக்கம்,%20நான்%20RRB%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20RRB%20Recruitment.%20Please%20provide%20more%20details",
     category: "Railway",
     badge: "NEW"
   },
@@ -55,7 +55,7 @@ const FALLBACK_JOBS = [
     eligibility: "Any Degree",
     lastDate: "21.07.2026",
     lastDateISO: "2026-07-21",
-    applyLink: "https://https://wa.me/918525041700?text=வணக்கம்,%20நான்%20IBPS%20PO/MT%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20IBPS%20PO/MT%20Recruitment.%20Please%20provide%20more%20details.
+    applyLink: "https://https://wa.me/918525041700?text=வணக்கம்,%20நான்%20IBPS%20PO/MT%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20IBPS%20PO/MT%20Recruitment.%20Please%20provide%20more%20details",
     category: "Bank",
     badge: "NEW"
   },
