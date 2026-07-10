@@ -1,0 +1,249 @@
+@{
+    ViewData["Title"] = "Government Job Updates 2026";
+}
+
+@section Styles {
+  <link rel="stylesheet" href="/css/job-updates.css">
+}
+
+<header class="page-header" role="banner" style="margin-top: 80px;">
+    <div class="header-logos" aria-label="Featured Organisation Logos">
+      <div class="logo-item" title="Railway Recruitment Board">
+        <div class="logo-circle logo-rrb">
+          <span class="logo-letter">RRB</span>
+        </div>
+        <span class="logo-name">RRB</span>
+      </div>
+      <div class="logo-item" title="Institute of Banking Personnel Selection">
+        <div class="logo-circle logo-ibps">
+          <span class="logo-letter">IBPS</span>
+        </div>
+        <span class="logo-name">IBPS</span>
+      </div>
+      <div class="logo-item" title="Union Public Service Commission">
+        <div class="logo-circle logo-upsc">
+          <span class="logo-letter">UPSC</span>
+        </div>
+        <span class="logo-name">UPSC</span>
+      </div>
+      <div class="logo-item" title="Tamil Nadu Public Service Commission">
+        <div class="logo-circle logo-tnpsc">
+          <span class="logo-letter">TNPSC</span>
+        </div>
+        <span class="logo-name">TNPSC</span>
+      </div>
+      <div class="logo-item" title="Indian Space Research Organisation">
+        <div class="logo-circle logo-isro">
+          <span class="logo-letter">ISRO</span>
+        </div>
+        <span class="logo-name">ISRO</span>
+      </div>
+      <div class="logo-item" title="Indian Oil Corporation Limited">
+        <div class="logo-circle logo-iocl">
+          <span class="logo-letter">IOCL</span>
+        </div>
+        <span class="logo-name">IOCL</span>
+      </div>
+    </div>
+
+    <div class="header-title-banner" role="heading" aria-level="1">
+      <div class="title-marquee-wrap">
+        <div class="title-content">
+          <i class="fa-solid fa-briefcase title-icon" aria-hidden="true"></i>
+          <h1 class="main-title">
+            தமிழ்நாடு மற்றும் மத்திய அரசு முக்கிய வேலை வாய்ப்பு செய்திகள்
+          </h1>
+          <i class="fa-solid fa-star title-icon-right" aria-hidden="true"></i>
+        </div>
+        <p class="header-subtitle">
+          <span class="subtitle-badge">
+            <i class="fa-solid fa-circle-info"></i> 2026 Latest Recruitments
+          </span>
+          <span class="subtitle-count" id="totalJobsCount">0 Jobs Listed</span>
+          <span class="subtitle-badge updated">
+            <i class="fa-solid fa-clock"></i> Updated Today
+          </span>
+        </p>
+      </div>
+    </div>
+</header>
+
+<main id="main-content">
+    <section class="filter-section" aria-label="Search and Filter Jobs">
+      <div class="filter-container">
+        <div class="filter-group search-group">
+          <label for="searchInput" class="filter-label">
+            <i class="fa-solid fa-magnifying-glass"></i> Search Job
+          </label>
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-search search-icon" aria-hidden="true"></i>
+            <input
+              type="text"
+              id="searchInput"
+              class="filter-input search-input"
+              placeholder="Search organization, eligibility..."
+              aria-label="Search jobs by keyword"
+              autocomplete="off">
+            <button class="clear-search" id="clearSearch" aria-label="Clear search" title="Clear">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label for="qualFilter" class="filter-label">
+            <i class="fa-solid fa-graduation-cap"></i> Qualification
+          </label>
+          <select id="qualFilter" class="filter-select" aria-label="Filter by qualification">
+            <option value="">All Qualifications</option>
+            <option value="10th">10th Pass</option>
+            <option value="12th">12th Pass</option>
+            <option value="ITI">ITI</option>
+            <option value="Diploma">Diploma</option>
+            <option value="Any Degree">Any Degree</option>
+            <option value="B.E">B.E / B.Tech</option>
+            <option value="MBA">MBA</option>
+            <option value="M.Sc">M.Sc / M.Tech</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="orgFilter" class="filter-label">
+            <i class="fa-solid fa-building-columns"></i> Organisation
+          </label>
+          <select id="orgFilter" class="filter-select" aria-label="Filter by organisation category">
+            <option value="">All Organisations</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="sortVacancy" class="filter-label">
+            <i class="fa-solid fa-sort-amount-down"></i> Sort by
+          </label>
+          <select id="sortVacancy" class="filter-select" aria-label="Sort jobs">
+            <option value="">Default Order</option>
+            <option value="vacancy-high">Vacancy: High to Low</option>
+            <option value="vacancy-low">Vacancy: Low to High</option>
+            <option value="date-near">Last Date: Nearest First</option>
+            <option value="date-far">Last Date: Farthest First</option>
+          </select>
+        </div>
+
+        <div class="filter-group reset-group">
+          <button id="resetFilters" class="btn-reset" aria-label="Reset all filters">
+            <i class="fa-solid fa-rotate-left"></i> Reset Filters
+          </button>
+        </div>
+      </div>
+
+      <div class="active-filters" id="activeFilters" aria-live="polite"></div>
+    </section>
+
+    <div class="results-bar" aria-live="polite">
+      <span id="resultsCount" class="results-count">Showing <strong>0</strong> jobs</span>
+      <div class="badge-legend">
+        <span class="badge badge-new">NEW</span>
+        <span class="badge badge-today">TODAY</span>
+        <span class="badge badge-lastdate">LAST DATE</span>
+        <span class="badge badge-expired">EXPIRED</span>
+      </div>
+    </div>
+
+    <section class="table-section" aria-label="Government Job Listings">
+      <div class="table-wrapper" id="tableWrapper">
+        <table class="jobs-table" id="jobsTable" role="table" aria-label="Government recruitment table">
+          <thead>
+            <tr role="row">
+              <th scope="col" class="th-org">
+                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                Organisation
+              </th>
+              <th scope="col" class="th-vacancy sortable" data-sort="vacancy" tabindex="0"
+                aria-sort="none" title="Click to sort by vacancy">
+                <i class="fa-solid fa-users" aria-hidden="true"></i>
+                Vacancy
+                <span class="sort-arrow">↕</span>
+              </th>
+              <th scope="col" class="th-eligibility">
+                <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                Eligibility
+              </th>
+              <th scope="col" class="th-date sortable" data-sort="date" tabindex="0"
+                aria-sort="none" title="Click to sort by last date">
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                Last Date
+                <span class="sort-arrow">↕</span>
+              </th>
+              <th scope="col" class="th-apply">
+                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                Apply
+              </th>
+            </tr>
+          </thead>
+          <tbody id="jobsTableBody">
+            <tr class="loading-row">
+              <td colspan="5">
+                <div class="table-loader">
+                  <div class="loader-spinner"></div>
+                  <span>Loading job updates...</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="no-results" id="noResults" hidden aria-live="assertive">
+        <div class="no-results-icon">🔍</div>
+        <h3>No Jobs Found</h3>
+        <p>Try adjusting your filters or search term.</p>
+        <button class="btn-reset" onclick="document.getElementById('resetFilters').click()">
+          <i class="fa-solid fa-rotate-left"></i> Reset Filters
+        </button>
+      </div>
+    </section>
+
+    <div class="sticky-apply-bar" id="stickyApplyBar" aria-hidden="true">
+      <span class="sticky-text">📋 Find your dream job above!</span>
+      <a href="#jobsTable" class="sticky-btn">
+        <i class="fa-solid fa-arrow-up"></i> View Jobs
+      </a>
+    </div>
+
+    <section class="stats-section" aria-label="Recruitment Statistics">
+      <div class="stats-grid">
+        <div class="stat-card stat-total">
+          <div class="stat-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="stat-info">
+            <span class="stat-number" id="statTotal">0</span>
+            <span class="stat-label">Total Listings</span>
+          </div>
+        </div>
+        <div class="stat-card stat-vacancies">
+          <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+          <div class="stat-info">
+            <span class="stat-number" id="statVacancies">0</span>
+            <span class="stat-label">Total Vacancies</span>
+          </div>
+        </div>
+        <div class="stat-card stat-urgent">
+          <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
+          <div class="stat-info">
+            <span class="stat-number" id="statUrgent">0</span>
+            <span class="stat-label">Closing Soon</span>
+          </div>
+        </div>
+        <div class="stat-card stat-new">
+          <div class="stat-icon"><i class="fa-solid fa-sparkles"></i></div>
+          <div class="stat-info">
+            <span class="stat-number" id="statNew">0</span>
+            <span class="stat-label">New This Week</span>
+          </div>
+        </div>
+      </div>
+    </section>
+</main>
+
+@section Scripts {
+  <script src="/js/job-updates.js"></script>
+}

@@ -1,0 +1,155 @@
+@inject ApplyPannuBro.Data.ApplicationDbContext DbContext
+@using Microsoft.EntityFrameworkCore
+@{
+    var settings = await DbContext.Settings.ToDictionaryAsync(s => s.Key, s => s.Value);
+    var siteName = settings.GetValueOrDefault("WebsiteName", "APPLY PANNU BRO");
+    var logoUrl = settings.GetValueOrDefault("LogoUrl", "/logo/logo.png");
+    var faviconUrl = settings.GetValueOrDefault("FaviconUrl", "/logo/favicon.ico");
+    var waNumber = settings.GetValueOrDefault("WhatsappNumber", "918525041700");
+    var displayPhone = settings.GetValueOrDefault("DisplayPhone", "8525041700");
+    var email = settings.GetValueOrDefault("Email", "applypannubro@gmail.com");
+    var workingHours = settings.GetValueOrDefault("WorkingHours", "24x7 Support Available");
+    var fbUrl = settings.GetValueOrDefault("FacebookUrl", "#");
+    var igUrl = settings.GetValueOrDefault("InstagramUrl", "#");
+    var seoDesc = settings.GetValueOrDefault("SEOMetaDescription", "");
+    var gaId = settings.GetValueOrDefault("GoogleAnalyticsId", "");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewData["Title"] | @siteName</title>
+  <meta name="description" content="@(ViewData["Description"] ?? seoDesc)">
+  <link rel="shortcut icon" href="@faviconUrl" type="image/x-icon">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS Links -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animation.css">
+  
+  @RenderSection("Styles", required: false)
+
+  @if (!string.IsNullOrEmpty(gaId))
+  {
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=@gaId"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '@gaId');
+      </script>
+  }
+</head>
+<body>
+
+  <!-- Loading Spinner -->
+  <div id="loader" class="loader-container">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="/" class="logo">
+        @if (!string.IsNullOrEmpty(logoUrl) && logoUrl != "none")
+        {
+            <img src="@logoUrl" alt="@siteName Logo" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+        }
+        <h1 style="display:inline-block; vertical-align: middle;">@siteName</h1>
+      </a>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Side Drawer Menu -->
+  <div id="mobile-nav" class="mobile-nav">
+    <div class="menu-top">
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+        <i class="fa-solid fa-moon"></i> Theme
+      </button>
+      <button id="close-menu-btn" class="close-menu-btn" aria-label="Close Menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/Home/Services">Services</a></li>
+      <li><a href="/Home/JobUpdates">Job Updates</a></li>
+      <li><a href="/Home/About">About</a></li>
+      <li><a href="/Home/Contact">Contact</a></li>
+    </ul>
+    <div class="menu-bottom">
+      <a href="/admin" class="btn btn-primary admin-btn"><i class="fa-solid fa-lock"></i> Admin Login</a>
+    </div>
+  </div>
+
+  @RenderBody()
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>@siteName</h3>
+          <p class="dynamic-footer-description">@settings.GetValueOrDefault("FooterDescription", "")</p>
+          <div class="social-links">
+            <a href="@fbUrl" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="@igUrl" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/@waNumber" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/Home/Services">Services</a></li>
+            <li><a href="/Home/JobUpdates">Job Updates</a></li>
+            <li><a href="/Home/About">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Information</h3>
+          <ul>
+            <li><a href="/Home/Terms">Terms & Conditions</a></li>
+            <li><a href="/Home/PrivacyPolicy">Privacy Policy</a></li>
+            <li><a href="/Home/RefundPolicy">Refund & Cancellation</a></li>
+            <li><a href="/Home/Faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year">@DateTime.Now.Year</span> @siteName. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SignalR Client -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+  
+  <!-- Global JavaScript Variables from C# -->
+  <script>
+      window.GlobalSettings = {
+          whatsappNumber: "@waNumber",
+          displayPhone: "@displayPhone",
+          email: "@email",
+          workingHours: "@workingHours",
+          facebookUrl: "@fbUrl",
+          instagramUrl: "@igUrl",
+          siteName: "@siteName"
+      };
+  </script>
+
+  <!-- Main JavaScript File -->
+  <script src="/js/main.js"></script>
+
+  @RenderSection("Scripts", required: false)
+
+</body>
+</html>

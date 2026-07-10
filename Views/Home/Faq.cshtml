@@ -1,0 +1,71 @@
+@{
+    ViewData["Title"] = "FAQ";
+}
+
+<div style="padding: 160px 0 80px; text-align: center; background: var(--surface-color); border-bottom: 1px solid var(--border-color);">
+  <div class="container fade-in-up">
+    <h1 class="section-title">Frequently Asked Questions</h1>
+    <p class="section-subtitle" style="margin-bottom: 0;">Everything you need to know about our services.</p>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container fade-in-up delay-100">
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question">PAN எப்படி Apply செய்வது? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">
+          <p>உங்கள் ஆதார் அட்டை மற்றும் புகைப்படம் இருந்தால் போதும். நாங்கள் ஆன்லைனில் விண்ணப்பித்து தருவோம்.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Aadhaar Update எவ்வளவு நேரம்? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">
+          <p>விண்ணப்பித்த 3 முதல் 7 நாட்களுக்குள் மாற்றம் செய்யப்படும்.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">WhatsApp மூலம் சேவை பெற முடியுமா? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">
+          <p>ஆம், உங்கள் ஆவணங்களை WhatsApp மூலம் அனுப்பி சேவைகளை பெற்றுக்கொள்ளலாம்.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">எந்தெந்த சேவைகள் கிடைக்கும்? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">
+          <p>PAN Card, Aadhaar, Voter ID, Passport, Driving Licence, GST Registration, FSSAI, Income Tax Filing மற்றும் 60+ சேவைகள் கிடைக்கும்.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">சேவைக் கட்டணம் எவ்வளவு? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">
+          <p>ஒவ்வொரு சேவைக்கும் தனித்தனி கட்டணம் உள்ளது. Services பக்கத்தில் அனைத்து கட்டண விவரங்களையும் பார்க்கலாம்.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">ஆவணங்களை எப்படி சமர்ப்பிப்பது? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">
+          <p>WhatsApp-ல் தேவையான ஆவணங்களின் படங்களை அனுப்பினால் போதும். எங்கள் குழு உங்களுக்கு உதவும்.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+@section Scripts {
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        if (question) {
+          question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            faqItems.forEach(f => f.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+          });
+        }
+      });
+    });
+  </script>
+}

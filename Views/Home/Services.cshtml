@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "All Services";
+}
+
+<div style="padding: 140px 0 60px; background: var(--surface-color); border-bottom: 1px solid var(--border-color); text-align: center;">
+  <div class="container fade-in-up">
+    <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: var(--primary-color);">Our All Services</h1>
+    <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 30px;">Browse through our online services. We provide fast, reliable, and secure support for all your needs.</p>
+    
+    <div class="search-bar" style="margin-bottom: 0;">
+      <i class="fa-solid fa-search"></i>
+      <input type="text" id="service-search" placeholder="Search services (e.g. PAN, Passport)...">
+      <div id="search-suggestions" class="search-suggestions"></div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="category-filters">
+      <button class="filter-btn active" data-filter="All">All</button>
+      <button class="filter-btn" data-filter="Government">Government</button>
+      <button class="filter-btn" data-filter="Education">Education</button>
+      <button class="filter-btn" data-filter="Business">Business</button>
+      <button class="filter-btn" data-filter="Payment">Payments</button>
+      <button class="filter-btn" data-filter="Booking">Booking</button>
+      <button class="filter-btn" data-filter="Travel">Travel</button>
+      <button class="filter-btn" data-filter="Recharge">Recharge</button>
+    </div>
+    
+    <div id="dynamic-services-grid" class="services-grid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+@section Scripts {
+  <script src="/js/filter.js"></script>
+  <script src="/js/search.js"></script>
+}
