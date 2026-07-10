@@ -252,4 +252,63 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  // ================================================================
+  // DYNAMIC SETTINGS (Injected by server into window.GlobalSettings)
+  // ================================================================
+  if (window.GlobalSettings) {
+    const gs = window.GlobalSettings;
+
+    // Patch WhatsApp links dynamically
+    if (gs.WhatsappNumber) {
+      const waUrl = `https://wa.me/${gs.WhatsappNumber}`;
+      document.querySelectorAll('.dynamic-whatsapp-link').forEach(a => a.href = waUrl);
+      document.querySelectorAll('.dynamic-whatsapp-text').forEach(el => el.textContent = gs.DisplayPhone || gs.WhatsappNumber);
+    }
+
+    // Patch email links dynamically
+    if (gs.Email) {
+      document.querySelectorAll('.dynamic-email-link').forEach(a => a.href = `mailto:${gs.Email}`);
+      document.querySelectorAll('.dynamic-email-text').forEach(el => el.textContent = gs.Email);
+    }
+  }
+
+  // ================================================================
+  // SIGNALR LIVE UPDATES (Public-facing pages)
+  // ================================================================
+  if (typeof signalR !== 'undefined') {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl('/liveUpdateHub')
+      .withAutomaticReconnect()
+      .build();
+
+    connection.on('ReceiveUpdate', (entity) => {
+      const currentPath = window.location.pathname;
+      if (entity === 'Jobs' && (currentPath === '/' || currentPath.toLowerCase().includes('jobupdates'))) {
+        if (typeof refreshJobUpdates === 'function') refreshJobUpdates();
+      }
+      if (entity === 'Services' && currentPath.toLowerCase().includes('services')) {
+        if (typeof refreshServices === 'function') refreshServices();
+      }
+    });
+
+    connection.start().catch(() => { /* silent – client doesn't need hub */ });
+  }
 });
+
+// ================================================================
+// SCROLL-BASED ANIMATION (shared utility for all public pages)
+// ================================================================
+(function () {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in-up, .service-card, .job-card').forEach(el => {
+    observer.observe(el);
+  });
+})();
