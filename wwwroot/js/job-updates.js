@@ -304,53 +304,21 @@ document.addEventListener('DOMContentLoaded', () => {
    DATA LOADING
    ================================================================ */
 /**
- * Loads active jobs from the /api/jobs REST endpoint.
- * Falls back to inline FALLBACK_JOBS if the request fails.
+ * Attempts to load jobs.json via fetch.
+ * Falls back to inline FALLBACK_JOBS if fetch fails.
  * @returns {Promise<Array>}
  */
 async function loadJobsData() {
   try {
-    const response = await fetch('/api/jobs?isActive=true&page=1&pageSize=100');
+    const response = await fetch('jobs.json');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    const jobs = Array.isArray(data) ? data : (data.items || []);
-    if (!jobs.length) return FALLBACK_JOBS;
-    // Map API shape -> rendering shape
-    return jobs.map(j => ({
-      id: j.id,
-      organization: j.organization || '',
-      orgShort: j.orgShort || j.organization || '',
-      vacancy: j.vacancy || 0,
-      eligibility: j.eligibility || 'Any Degree',
-      lastDate: j.lastDate ? new Date(j.lastDate).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '',
-      lastDateISO: j.lastDate ? j.lastDate.substring(0, 10) : '',
-      applyLink: j.applyLink || '#',
-      category: j.category?.name || j.category || 'General',
-      badge: j.badge || 'NEW',
-      logoUrl: j.logoUrl || '',
-      pdfUrl: j.pdfUrl || ''
-    }));
+    return Array.isArray(data) ? data : FALLBACK_JOBS;
   } catch (e) {
-    console.warn('[JobUpdates] API fetch failed, using fallback data.', e.message);
+    console.warn('[JobUpdates] Fetch failed, using fallback data.', e.message);
     return FALLBACK_JOBS;
   }
 }
-
-/**
- * Public function called by SignalR live update listener in main.js
- * to refresh the job list without a page reload.
- */
-window.refreshJobUpdates = function () {
-  loadJobsData()
-    .then(jobs => {
-      state.allJobs = jobs;
-      state.filteredJobs = [...jobs];
-      renderTable(jobs);
-      updateStats(jobs);
-      updateTotalCount(jobs.length);
-    })
-    .catch(console.error);
-};
 
 /* ================================================================
    TABLE RENDERING
