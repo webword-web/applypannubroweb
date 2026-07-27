@@ -1618,14 +1618,65 @@ th.sort-desc .sort-arrow {
     min-width: 100%;
   }
 
-  /* Table */
+  /* Table - Mobile Card Layout */
   .table-wrapper {
     border-radius: var(--radius-md);
+    overflow-x: hidden;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
-  .jobs-table th,
+  .jobs-table,
+  .jobs-table tbody,
+  .jobs-table tr,
   .jobs-table td {
-    padding: 12px 12px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .jobs-table {
+    min-width: unset;
+  }
+
+  .jobs-table thead {
+    display: none;
+  }
+
+  .jobs-table tr {
+    margin-bottom: 16px;
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 16px;
+  }
+
+  .jobs-table td {
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  .jobs-table td:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    padding-top: 12px;
+  }
+
+  .td-org-name {
+    font-size: 1.15rem !important;
+  }
+
+  .btn-apply {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
   }
 
   /* Stats */
