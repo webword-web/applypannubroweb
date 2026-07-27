@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper function to build job card HTML
     function buildCardHtml(job) {
-      const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(job.whatsapp)}`;
+      const applyLink = job.applyLink || `https://wa.me/${waNumber}?text=${encodeURIComponent(job.whatsapp || 'Hi, I want to apply.')}`;
       return `
         <div class="job-card">
           <div class="job-card-img-wrapper">
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="job-card-detail-item"><i class="fa-solid fa-graduation-cap"></i> <span>${job.qualification || 'Not Specified'}</span></div>
               <div class="job-card-detail-item"><i class="fa-solid fa-calendar-days"></i> <span>Last Date: ${job.lastDate || 'Apply Soon'}</span></div>
             </div>
-            <a href="${waLink}" target="_blank" class="job-card-btn">
+            <a href="${applyLink}" target="_blank" class="job-card-btn">
               <i class="fa-brands fa-whatsapp"></i> Apply Now
             </a>
           </div>

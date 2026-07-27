@@ -163,52 +163,28 @@
           </div>
         </div>
 
-        <!-- Qualification Filter -->
+        <!-- Category Filter -->
         <div class="filter-group">
-          <label for="qualFilter" class="filter-label">
-            <i class="fa-solid fa-graduation-cap"></i> Qualification
+          <label for="categoryFilter" class="filter-label">
+            <i class="fa-solid fa-list"></i> Job Category
           </label>
-          <select id="qualFilter" class="filter-select" aria-label="Filter by qualification">
-            <option value="">All Qualifications</option>
-            <option value="10th">10th Pass</option>
-            <option value="12th">12th Pass</option>
-            <option value="ITI">ITI</option>
-            <option value="Diploma">Diploma</option>
-            <option value="Any Degree">Any Degree</option>
-            <option value="B.E">B.E / B.Tech</option>
-            <option value="MBA">MBA</option>
-            <option value="M.Sc">M.Sc / M.Tech</option>
+          <select id="categoryFilter" class="filter-select" aria-label="Filter by job category">
+            <option value="">All Jobs</option>
+            <option value="Government Jobs">Government Jobs</option>
+            <option value="Private Jobs">Private Jobs</option>
+            <option value="IT Jobs">IT Jobs</option>
+            <option value="Work From Home">Work From Home</option>
           </select>
         </div>
 
-        <!-- Organisation Filter -->
+        <!-- Sort by -->
         <div class="filter-group">
-          <label for="orgFilter" class="filter-label">
-            <i class="fa-solid fa-building-columns"></i> Organisation
-          </label>
-          <select id="orgFilter" class="filter-select" aria-label="Filter by organisation category">
-            <option value="">All Organisations</option>
-            <option value="Railway">Railway</option>
-            <option value="Bank">Bank</option>
-            <option value="PSU">PSU</option>
-            <option value="Central Govt">Central Govt</option>
-            <option value="State Govt">State Govt</option>
-            <option value="Defence">Defence</option>
-            <option value="Research">Research</option>
-          </select>
-        </div>
-
-        <!-- Sort by Vacancy -->
-        <div class="filter-group">
-          <label for="sortVacancy" class="filter-label">
+          <label for="sortJobs" class="filter-label">
             <i class="fa-solid fa-sort-amount-down"></i> Sort by
           </label>
-          <select id="sortVacancy" class="filter-select" aria-label="Sort jobs">
-            <option value="">Default Order</option>
-            <option value="vacancy-high">Vacancy: High to Low</option>
-            <option value="vacancy-low">Vacancy: Low to High</option>
+          <select id="sortJobs" class="filter-select" aria-label="Sort jobs">
+            <option value="newest">Newest First</option>
             <option value="date-near">Last Date: Nearest First</option>
-            <option value="date-far">Last Date: Farthest First</option>
           </select>
         </div>
 
@@ -247,19 +223,17 @@
         <table class="jobs-table" id="jobsTable" role="table" aria-label="Government recruitment table">
           <thead>
             <tr role="row">
-              <th scope="col" class="th-org">
-                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
-                Organisation
+              <th scope="col" class="th-job">
+                <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                Job Details
               </th>
-              <th scope="col" class="th-vacancy sortable" data-sort="vacancy" tabindex="0"
-                aria-sort="none" title="Click to sort by vacancy">
-                <i class="fa-solid fa-users" aria-hidden="true"></i>
-                Vacancy
-                <span class="sort-arrow">↕</span>
+              <th scope="col" class="th-location">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                Location & Salary
               </th>
               <th scope="col" class="th-eligibility">
                 <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
-                Eligibility
+                Qualification
               </th>
               <th scope="col" class="th-date sortable" data-sort="date" tabindex="0"
                 aria-sort="none" title="Click to sort by last date">
@@ -422,6 +396,7 @@
   <!-- ============================================================
        SCRIPT: Load jobs data and render table
        ============================================================ -->
+  <script src="js/jobs.js"></script>
   <script src="js/job-updates.js"></script>
 
 </body>

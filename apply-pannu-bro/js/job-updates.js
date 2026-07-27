@@ -5,11 +5,12 @@
  * ================================================================
  *
  * Features:
- *  - Loads jobs from jobs.json via fetch (or falls back to inline data)
- *  - Renders job rows with badges, eligibility tags, days-left calculation
- *  - Search by keyword (org name, eligibility, category)
- *  - Filter by qualification and organisation category
- *  - Sort by vacancy count or last date
+ *  - Reads jobs from global window.jobsData (set in jobs.js)
+ *  - Renders job rows with proper categories, locations, salaries
+ *  - Disables apply button automatically if Status is 'Closed'
+ *  - Search by keyword (title, company, category)
+ *  - Filter by category (Government, Private, IT, WFH)
+ *  - Sort by newest (posted date) or last date
  *  - Active filter pills
  *  - Statistics update dynamically
  *  - Toast notifications on apply click
@@ -19,227 +20,15 @@
  */
 
 /* ----------------------------------------------------------------
-   INLINE FALLBACK DATA
-   (Used if jobs.json fails to load — e.g., opened via file:// protocol)
-   ---------------------------------------------------------------- */
-const FALLBACK_JOBS = [
-  {
-    id: 1,
-    organization: "RRB Technician",
-    orgShort: "RRB",
-    vacancy: 6565,
-    eligibility: "ITI, Diploma, B.E/B.Tech",
-    lastDate: "29.07.2026",
-    lastDateISO: "2026-07-29",
-    applyLink: "https://wa.me/918525041700?text=வணக்கம்,%20நான்%20RRB%20Technician%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20RRB%20Technician%20Recruitment.%20Please%20provide%20more%20details",
-    category: "Railway",
-    badge: "NEW"
-  },
-  {
-    id: 2,
-    organization: "RRB",
-    orgShort: "RRB",
-    vacancy: 119,
-    eligibility: "Any Degree",
-    lastDate: "14.08.2026",
-    lastDateISO: "2026-08-14",
-    applyLink: "https://https://wa.me/918525041700?text=வணக்கம்,%20நான்%20RRB%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20RRB%20Recruitment.%20Please%20provide%20more%20details",
-    category: "Railway",
-    badge: "NEW"
-  },
-  {
-    id: 3,
-    organization: "IBPS PO/MT",
-    orgShort: "IBPS",
-    vacancy: 6715,
-    eligibility: "Any Degree",
-    lastDate: "21.07.2026",
-    lastDateISO: "2026-07-21",
-    applyLink: "https://https://wa.me/918525041700?text=வணக்கம்,%20நான்%20IBPS%20PO/MT%20வேலைக்கு%20விண்ணப்பிக்க%20விரும்புகிறேன்.%20மேலும்%20விவரங்களை%20தெரிவிக்கவும்.%0A%0AHi,%20I%20want%20to%20apply%20for%20IBPS%20PO/MT%20Recruitment.%20Please%20provide%20more%20details",
-    category: "Bank",
-    badge: "NEW"
-  },
-  {
-    id: 4,
-    organization: "IBPS SO",
-    orgShort: "IBPS",
-    vacancy: 745,
-    eligibility: "Any Degree",
-    lastDate: "21.07.2026",
-    lastDateISO: "2026-07-21",
-    applyLink: "https://www.ibps.in/",
-    category: "Bank",
-    badge: "NEW"
-  },
-  {
-    id: 5,
-    organization: "Bank of India",
-    orgShort: "BOI",
-    vacancy: 779,
-    eligibility: "Any Degree, MBA, CA",
-    lastDate: "20.07.2026",
-    lastDateISO: "2026-07-20",
-    applyLink: "https://www.bankofindia.co.in/",
-    category: "Bank",
-    badge: "TODAY"
-  },
-  {
-    id: 6,
-    organization: "IOCL",
-    orgShort: "IOCL",
-    vacancy: 1626,
-    eligibility: "12th, ITI, Diploma, B.Sc",
-    lastDate: "28.07.2026",
-    lastDateISO: "2026-07-28",
-    applyLink: "https://iocl.com/",
-    category: "PSU",
-    badge: "NEW"
-  },
-  {
-    id: 7,
-    organization: "UPSC",
-    orgShort: "UPSC",
-    vacancy: 450,
-    eligibility: "B.E, Any Degree, B.Pharm",
-    lastDate: "17.07.2026",
-    lastDateISO: "2026-07-17",
-    applyLink: "https://upsc.gov.in/",
-    category: "Central Govt",
-    badge: "LAST DATE"
-  },
-  {
-    id: 8,
-    organization: "Indian Navy",
-    orgShort: "Navy",
-    vacancy: 275,
-    eligibility: "B.E/B.Tech, M.Sc, MBA",
-    lastDate: "27.07.2026",
-    lastDateISO: "2026-07-27",
-    applyLink: "https://joinindiannavy.gov.in/",
-    category: "Defence",
-    badge: "NEW"
-  },
-  {
-    id: 9,
-    organization: "CCRUM",
-    orgShort: "CCRUM",
-    vacancy: 179,
-    eligibility: "10th, ITI, Any Degree",
-    lastDate: "31.07.2026",
-    lastDateISO: "2026-07-31",
-    applyLink: "https://ccrum.res.in/",
-    category: "Central Govt",
-    badge: "NEW"
-  },
-  {
-    id: 10,
-    organization: "HPCL",
-    orgShort: "HPCL",
-    vacancy: 116,
-    eligibility: "Diploma, B.E/B.Tech, MBA",
-    lastDate: "20.07.2026",
-    lastDateISO: "2026-07-20",
-    applyLink: "https://hindustanpetroleum.com/",
-    category: "PSU",
-    badge: "TODAY"
-  },
-  {
-    id: 11,
-    organization: "TNPSC Group 1",
-    orgShort: "TNPSC",
-    vacancy: 26,
-    eligibility: "Any Degree",
-    lastDate: "29.07.2026",
-    lastDateISO: "2026-07-29",
-    applyLink: "https://www.tnpsc.gov.in/",
-    category: "State Govt",
-    badge: "NEW"
-  },
-  {
-    id: 12,
-    organization: "Cochin Shipyard",
-    orgShort: "CSL",
-    vacancy: 60,
-    eligibility: "10th, 12th",
-    lastDate: "22.07.2026",
-    lastDateISO: "2026-07-22",
-    applyLink: "https://cochinshipyard.in/",
-    category: "PSU",
-    badge: "NEW"
-  },
-  {
-    id: 13,
-    organization: "RRI",
-    orgShort: "RRI",
-    vacancy: 22,
-    eligibility: "ITI, Diploma, M.Sc, M.Tech",
-    lastDate: "31.07.2026",
-    lastDateISO: "2026-07-31",
-    applyLink: "https://rri.res.in/",
-    category: "Research",
-    badge: "NEW"
-  },
-  {
-    id: 14,
-    organization: "ISRO ISTRAC",
-    orgShort: "ISRO",
-    vacancy: 27,
-    eligibility: "ITI, Diploma, B.Sc, MLIS",
-    lastDate: "20.07.2026",
-    lastDateISO: "2026-07-20",
-    applyLink: "https://www.isro.gov.in/",
-    category: "Central Govt",
-    badge: "TODAY"
-  },
-  {
-    id: 15,
-    organization: "RCFL",
-    orgShort: "RCFL",
-    vacancy: 32,
-    eligibility: "Diploma, B.E/B.Tech, MBBS",
-    lastDate: "13.07.2026",
-    lastDateISO: "2026-07-13",
-    applyLink: "https://rcfltd.com/",
-    category: "PSU",
-    badge: "LAST DATE"
-  },
-  {
-    id: 16,
-    organization: "NIN",
-    orgShort: "NIN",
-    vacancy: 279,
-    eligibility: "10th, Diploma, Any Degree",
-    lastDate: "27.07.2026",
-    lastDateISO: "2026-07-27",
-    applyLink: "https://ninindia.org/",
-    category: "Research",
-    badge: "NEW"
-  },
-  {
-    id: 17,
-    organization: "CMERI",
-    orgShort: "CMERI",
-    vacancy: 27,
-    eligibility: "10th, ITI",
-    lastDate: "03.08.2026",
-    lastDateISO: "2026-08-03",
-    applyLink: "https://www.cmeri.res.in/",
-    category: "Research",
-    badge: "NEW"
-  }
-];
-
-/* ----------------------------------------------------------------
    STATE — holds all jobs and current filter state
    ---------------------------------------------------------------- */
 const state = {
-  allJobs: [],       // master data
-  filteredJobs: [],       // after filters applied
+  allJobs: [],       // master data from window.jobsData
+  filteredJobs: [],  // after filters applied
   searchTerm: '',
-  qualFilter: '',
-  orgFilter: '',
-  sortOrder: '',
-  sortCol: null,     // 'vacancy' | 'date' | null
+  categoryFilter: '',
+  sortOrder: 'newest',
+  sortCol: null,     // 'date' | null
   sortDir: 'asc'     // 'asc' | 'desc'
 };
 
@@ -250,9 +39,8 @@ const DOM = {
   tableBody: () => document.getElementById('jobsTableBody'),
   searchInput: () => document.getElementById('searchInput'),
   clearSearch: () => document.getElementById('clearSearch'),
-  qualFilter: () => document.getElementById('qualFilter'),
-  orgFilter: () => document.getElementById('orgFilter'),
-  sortVacancy: () => document.getElementById('sortVacancy'),
+  categoryFilter: () => document.getElementById('categoryFilter'),
+  sortJobs: () => document.getElementById('sortJobs'),
   resetBtn: () => document.getElementById('resetFilters'),
   resultsCount: () => document.getElementById('resultsCount'),
   noResults: () => document.getElementById('noResults'),
@@ -260,9 +48,9 @@ const DOM = {
   activeFilters: () => document.getElementById('activeFilters'),
   totalCount: () => document.getElementById('totalJobsCount'),
   statTotal: () => document.getElementById('statTotal'),
-  statVacancies: () => document.getElementById('statVacancies'),
-  statUrgent: () => document.getElementById('statUrgent'),
-  statNew: () => document.getElementById('statNew'),
+  statVacancies: () => document.getElementById('statVacancies'), // Will represent Active Jobs now
+  statUrgent: () => document.getElementById('statUrgent'), // Will represent Govt Jobs
+  statNew: () => document.getElementById('statNew'), // Will represent Private Jobs
   toastContainer: () => document.getElementById('toastContainer'),
   copyrightYear: () => document.getElementById('copyrightYear')
 };
@@ -275,50 +63,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const yr = DOM.copyrightYear();
   if (yr) yr.textContent = new Date().getFullYear();
 
-  // Load data then wire up UI
-  loadJobsData()
-    .then(jobs => {
-      state.allJobs = jobs;
-      state.filteredJobs = [...jobs];
-      renderTable(jobs);
-      updateStats(jobs);
-      updateTotalCount(jobs.length);
-      wireFilters();
-      wireSortableHeaders();
-    })
-    .catch(err => {
-      console.error('[JobUpdates] Failed to load jobs:', err);
-      showToast('Could not load jobs. Showing cached data.', 'error');
-      // Use fallback data
-      state.allJobs = FALLBACK_JOBS;
-      state.filteredJobs = [...FALLBACK_JOBS];
-      renderTable(FALLBACK_JOBS);
-      updateStats(FALLBACK_JOBS);
-      updateTotalCount(FALLBACK_JOBS.length);
-      wireFilters();
-      wireSortableHeaders();
-    });
+  // Load data from global variable
+  if (window.jobsData && Array.isArray(window.jobsData)) {
+    state.allJobs = window.jobsData;
+  } else {
+    state.allJobs = [];
+    console.warn('[JobUpdates] window.jobsData not found or invalid.');
+  }
+
+  // Pre-process dates for easier sorting
+  state.allJobs.forEach((job, idx) => {
+    job.id = idx + 1;
+    // Attempt to parse dates for sorting. If invalid, they will be handled gracefully.
+    job._parsedPostedDate = job.postedDate ? new Date(job.postedDate).getTime() : 0;
+  });
+
+  state.filteredJobs = [...state.allJobs];
+  
+  wireFilters();
+  wireSortableHeaders();
+  
+  // Set default select values according to state
+  const sortEl = DOM.sortJobs();
+  if (sortEl) sortEl.value = state.sortOrder;
+
+  // Initial render
+  applyFilters();
 });
 
-/* ================================================================
-   DATA LOADING
-   ================================================================ */
-/**
- * Attempts to load jobs.json via fetch.
- * Falls back to inline FALLBACK_JOBS if fetch fails.
- * @returns {Promise<Array>}
- */
-async function loadJobsData() {
-  try {
-    const response = await fetch('jobs.json');
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    return Array.isArray(data) ? data : FALLBACK_JOBS;
-  } catch (e) {
-    console.warn('[JobUpdates] Fetch failed, using fallback data.', e.message);
-    return FALLBACK_JOBS;
-  }
-}
 
 /* ================================================================
    TABLE RENDERING
@@ -358,120 +130,80 @@ function renderTable(jobs) {
  * @returns {string} HTML string
  */
 function buildRow(job, index) {
-  const badge = resolveBadge(job);
-  const daysLeft = getDaysLeft(job.lastDateISO);
-  const isExpired = daysLeft < 0;
-  const isUrgent = daysLeft >= 0 && daysLeft <= 3;
-  const isToday = daysLeft === 0;
+  const isClosed = job.status && job.status.toLowerCase() === 'closed';
 
-  // Eligibility split into tags
-  const eligTags = job.eligibility
-    .split(',')
-    .map(e => e.trim())
-    .filter(Boolean)
-    .map(e => `<span class="elig-tag">${escapeHtml(e)}</span>`)
-    .join('');
-
-  // Days-left label
-  let daysLabel = '';
-  let daysClass = '';
-  if (isExpired) {
-    daysLabel = 'Expired';
-    daysClass = 'td-days-left urgent';
-  } else if (isToday) {
-    daysLabel = 'Today is Last Day!';
-    daysClass = 'td-days-left today';
-  } else if (isUrgent) {
-    daysLabel = `⚠ ${daysLeft} day${daysLeft === 1 ? '' : 's'} left`;
-    daysClass = 'td-days-left urgent';
+  // Badge logic (New vs Closed vs Active)
+  let badgeHtml = '';
+  if (isClosed) {
+    badgeHtml = `<span class="badge badge-expired">CLOSED</span>`;
   } else {
-    daysLabel = `${daysLeft} days left`;
-    daysClass = 'td-days-left';
+    // If posted within last 7 days, mark as NEW
+    const daysSincePosted = (new Date().getTime() - job._parsedPostedDate) / (1000 * 3600 * 24);
+    if (daysSincePosted <= 7 && job._parsedPostedDate > 0) {
+      badgeHtml = `<span class="badge badge-new">NEW</span>`;
+    } else {
+      badgeHtml = `<span class="badge badge-today">ACTIVE</span>`;
+    }
   }
 
   // Apply button
-  const applyBtn = isExpired
+  const applyBtn = isClosed
     ? `<span class="btn-apply expired" aria-disabled="true">
-         <i class="fa-solid fa-ban" aria-hidden="true"></i> Expired
+         <i class="fa-solid fa-ban" aria-hidden="true"></i> Closed
        </span>`
     : `<a href="${escapeHtml(job.applyLink)}"
           target="_blank"
           rel="noopener noreferrer"
           class="btn-apply"
           id="apply-btn-${job.id}"
-          aria-label="Apply for ${escapeHtml(job.organization)}"
-          onclick="handleApplyClick('${escapeHtml(job.organization)}')">
+          aria-label="Apply for ${escapeHtml(job.title)}"
+          onclick="handleApplyClick('${escapeHtml(job.title)}')">
          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-         CLICK TO APPLY
+         APPLY NOW
        </a>`;
 
-  // Badge HTML
-  const badgeHtml = badge
-    ? `<span class="badge badge-${badge.toLowerCase().replace(' ', '')}">${badge}</span>`
-    : '';
-
   return `
-    <tr role="row" data-id="${job.id}" style="animation-delay: ${index * 40}ms">
+    <tr role="row" data-id="${job.id}" style="animation-delay: ${index * 40}ms" class="${isClosed ? 'row-closed' : ''}">
+      <!-- Job Details -->
       <td>
         <div class="td-org-wrap">
-          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <span class="td-org-name">${escapeHtml(job.organization)}</span>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;">
+            <span class="td-org-name" style="font-size: 1.1rem; color: var(--primary-color);">${escapeHtml(job.title)}</span>
             ${badgeHtml}
           </div>
-          <span class="td-org-category">${escapeHtml(job.category)}</span>
+          <span class="td-org-category"><strong>${escapeHtml(job.company)}</strong> • ${escapeHtml(job.category)}</span>
         </div>
       </td>
+      
+      <!-- Location & Salary -->
       <td>
-        <span class="td-vacancy-num">${job.vacancy.toLocaleString('en-IN')}</span>
-        <span class="vacancy-label">Vacancies</span>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <span style="font-weight:600;"><i class="fa-solid fa-location-dot" style="color:var(--text-secondary);width:16px;"></i> ${escapeHtml(job.location)}</span>
+          <span style="font-size:0.9rem; color:var(--text-secondary);"><i class="fa-solid fa-indian-rupee-sign" style="width:16px;"></i> ${escapeHtml(job.salary || 'Not Specified')}</span>
+        </div>
       </td>
+      
+      <!-- Qualification -->
       <td>
-        <div class="eligibility-tags">${eligTags}</div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+           <span style="font-weight:600; color:var(--text-primary);">${escapeHtml(job.qualification)}</span>
+           <span style="font-size:0.9rem; color:var(--text-secondary);">Exp: ${escapeHtml(job.experience || 'Not Specified')}</span>
+        </div>
       </td>
+      
+      <!-- Last Date -->
       <td>
         <div class="td-date-wrap">
           <span class="td-date-val">${escapeHtml(job.lastDate)}</span>
-          <span class="${daysClass}">${daysLabel}</span>
         </div>
       </td>
+      
+      <!-- Apply -->
       <td>${applyBtn}</td>
     </tr>
   `;
 }
 
-/* ================================================================
-   BADGE RESOLUTION
-   ================================================================ */
-/**
- * Determines the correct badge for a job based on its date and
- * the badge field, auto-upgrading to EXPIRED if past the last date.
- * @param {Object} job
- * @returns {string} badge string
- */
-function resolveBadge(job) {
-  const daysLeft = getDaysLeft(job.lastDateISO);
-  if (daysLeft < 0) return 'EXPIRED';
-  if (daysLeft === 0) return 'TODAY';
-  if (daysLeft <= 3) return 'LAST DATE';
-  return job.badge || 'NEW';
-}
-
-/* ================================================================
-   DATE UTILITIES
-   ================================================================ */
-/**
- * Calculates days remaining until a given ISO date string.
- * @param {string} isoDateStr - e.g. "2026-07-29"
- * @returns {number} days left (negative if expired)
- */
-function getDaysLeft(isoDateStr) {
-  if (!isoDateStr) return 999;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const lastDate = new Date(isoDateStr);
-  lastDate.setHours(0, 0, 0, 0);
-  return Math.round((lastDate - today) / (1000 * 60 * 60 * 24));
-}
 
 /* ================================================================
    FILTER ENGINE
@@ -483,50 +215,39 @@ function getDaysLeft(isoDateStr) {
 function applyFilters() {
   let jobs = [...state.allJobs];
 
-  // 1. Keyword search (org name, eligibility, category)
+  // 1. Keyword search
   if (state.searchTerm) {
     const term = state.searchTerm.toLowerCase();
     jobs = jobs.filter(j =>
-      j.organization.toLowerCase().includes(term) ||
-      j.eligibility.toLowerCase().includes(term) ||
-      j.category.toLowerCase().includes(term)
+      (j.title || '').toLowerCase().includes(term) ||
+      (j.company || '').toLowerCase().includes(term) ||
+      (j.qualification || '').toLowerCase().includes(term) ||
+      (j.location || '').toLowerCase().includes(term)
     );
   }
 
-  // 2. Qualification filter
-  if (state.qualFilter) {
-    const q = state.qualFilter.toLowerCase();
+  // 2. Category filter
+  if (state.categoryFilter) {
+    const cat = state.categoryFilter.toLowerCase();
     jobs = jobs.filter(j =>
-      j.eligibility.toLowerCase().includes(q)
+      (j.category || '').toLowerCase() === cat
     );
   }
 
-  // 3. Organisation category filter
-  if (state.orgFilter) {
-    jobs = jobs.filter(j =>
-      j.category.toLowerCase() === state.orgFilter.toLowerCase()
-    );
-  }
-
-  // 4. Sort
+  // 3. Sort
   const sortVal = state.sortOrder;
-  if (sortVal === 'vacancy-high') {
-    jobs.sort((a, b) => b.vacancy - a.vacancy);
-  } else if (sortVal === 'vacancy-low') {
-    jobs.sort((a, b) => a.vacancy - b.vacancy);
+  if (sortVal === 'newest') {
+    jobs.sort((a, b) => b._parsedPostedDate - a._parsedPostedDate);
   } else if (sortVal === 'date-near') {
-    jobs.sort((a, b) => new Date(a.lastDateISO) - new Date(b.lastDateISO));
-  } else if (sortVal === 'date-far') {
-    jobs.sort((a, b) => new Date(b.lastDateISO) - new Date(a.lastDateISO));
+    // Basic string sort for dates if not properly formatted.
+    jobs.sort((a, b) => (a.lastDate || '').localeCompare(b.lastDate || ''));
   }
 
-  // 5. Column header sort (overrides select-based sort)
+  // 4. Column header sort (overrides select-based sort)
   if (state.sortCol) {
     const dir = state.sortDir === 'asc' ? 1 : -1;
-    if (state.sortCol === 'vacancy') {
-      jobs.sort((a, b) => (a.vacancy - b.vacancy) * dir);
-    } else if (state.sortCol === 'date') {
-      jobs.sort((a, b) => (new Date(a.lastDateISO) - new Date(b.lastDateISO)) * dir);
+    if (state.sortCol === 'date') {
+      jobs.sort((a, b) => (a.lastDate || '').localeCompare(b.lastDate || '') * dir);
     }
   }
 
@@ -534,6 +255,7 @@ function applyFilters() {
   renderTable(jobs);
   updateStats(jobs);
   renderActivePills();
+  updateTotalCount(state.allJobs.length);
 }
 
 /* ================================================================
@@ -545,9 +267,8 @@ function applyFilters() {
 function wireFilters() {
   const searchEl = DOM.searchInput();
   const clearEl = DOM.clearSearch();
-  const qualEl = DOM.qualFilter();
-  const orgEl = DOM.orgFilter();
-  const sortEl = DOM.sortVacancy();
+  const catEl = DOM.categoryFilter();
+  const sortEl = DOM.sortJobs();
   const resetEl = DOM.resetBtn();
 
   // Search input - live filter with debounce
@@ -574,18 +295,10 @@ function wireFilters() {
     });
   }
 
-  // Qualification filter
-  if (qualEl) {
-    qualEl.addEventListener('change', () => {
-      state.qualFilter = qualEl.value;
-      applyFilters();
-    });
-  }
-
-  // Organisation filter
-  if (orgEl) {
-    orgEl.addEventListener('change', () => {
-      state.orgFilter = orgEl.value;
+  // Category filter
+  if (catEl) {
+    catEl.addEventListener('change', () => {
+      state.categoryFilter = catEl.value;
       applyFilters();
     });
   }
@@ -611,24 +324,21 @@ function wireFilters() {
  */
 function resetAllFilters() {
   state.searchTerm = '';
-  state.qualFilter = '';
-  state.orgFilter = '';
-  state.sortOrder = '';
+  state.categoryFilter = '';
+  state.sortOrder = 'newest';
   state.sortCol = null;
   state.sortDir = 'asc';
 
   // Reset UI elements
   const searchEl = DOM.searchInput();
   const clearEl = DOM.clearSearch();
-  const qualEl = DOM.qualFilter();
-  const orgEl = DOM.orgFilter();
-  const sortEl = DOM.sortVacancy();
+  const catEl = DOM.categoryFilter();
+  const sortEl = DOM.sortJobs();
 
   if (searchEl) searchEl.value = '';
   if (clearEl) clearEl.classList.remove('visible');
-  if (qualEl) qualEl.value = '';
-  if (orgEl) orgEl.value = '';
-  if (sortEl) sortEl.value = '';
+  if (catEl) catEl.value = '';
+  if (sortEl) sortEl.value = 'newest';
 
   clearSortArrows();
   applyFilters();
@@ -659,7 +369,7 @@ function wireSortableHeaders() {
  * @param {HTMLElement} th - the clicked th element
  */
 function handleHeaderSort(th) {
-  const col = th.dataset.sort; // 'vacancy' | 'date'
+  const col = th.dataset.sort; // 'date'
 
   if (state.sortCol === col) {
     // Same column - toggle direction
@@ -672,7 +382,7 @@ function handleHeaderSort(th) {
 
   // Clear the select-based sort
   state.sortOrder = '';
-  const sortEl = DOM.sortVacancy();
+  const sortEl = DOM.sortJobs();
   if (sortEl) sortEl.value = '';
 
   // Update ARIA + visual arrows
@@ -719,44 +429,34 @@ function renderActivePills() {
     });
   }
 
-  if (state.qualFilter) {
+  if (state.categoryFilter) {
     pills.push({
-      label: `Qualification: ${state.qualFilter}`,
+      label: `Category: ${state.categoryFilter}`,
       clear: () => {
-        state.qualFilter = '';
-        const el = DOM.qualFilter();
+        state.categoryFilter = '';
+        const el = DOM.categoryFilter();
         if (el) el.value = '';
         applyFilters();
       }
     });
   }
 
-  if (state.orgFilter) {
-    pills.push({
-      label: `Category: ${state.orgFilter}`,
-      clear: () => {
-        state.orgFilter = '';
-        const el = DOM.orgFilter();
-        if (el) el.value = '';
-        applyFilters();
-      }
-    });
-  }
-
-  if (state.sortOrder || state.sortCol) {
+  if ((state.sortOrder && state.sortOrder !== 'newest') || state.sortCol) {
     const sortLabel = getSortLabel();
-    pills.push({
-      label: `Sort: ${sortLabel}`,
-      clear: () => {
-        state.sortOrder = '';
-        state.sortCol = null;
-        state.sortDir = 'asc';
-        const el = DOM.sortVacancy();
-        if (el) el.value = '';
-        clearSortArrows();
-        applyFilters();
-      }
-    });
+    if (sortLabel) {
+      pills.push({
+        label: `Sort: ${sortLabel}`,
+        clear: () => {
+          state.sortOrder = 'newest';
+          state.sortCol = null;
+          state.sortDir = 'asc';
+          const el = DOM.sortJobs();
+          if (el) el.value = 'newest';
+          clearSortArrows();
+          applyFilters();
+        }
+      });
+    }
   }
 
   container.innerHTML = pills.map((pill, i) => `
@@ -780,13 +480,10 @@ function renderActivePills() {
  * @returns {string}
  */
 function getSortLabel() {
-  if (state.sortCol === 'vacancy') return `Vacancy (${state.sortDir === 'asc' ? 'Low→High' : 'High→Low'})`;
   if (state.sortCol === 'date') return `Last Date (${state.sortDir === 'asc' ? 'Nearest' : 'Farthest'})`;
   const map = {
-    'vacancy-high': 'Vacancy: High→Low',
-    'vacancy-low': 'Vacancy: Low→High',
-    'date-near': 'Date: Nearest first',
-    'date-far': 'Date: Farthest first'
+    'newest': 'Newest First',
+    'date-near': 'Date: Nearest first'
   };
   return map[state.sortOrder] || '';
 }
@@ -799,20 +496,30 @@ function getSortLabel() {
  * @param {Array} jobs - current filtered set
  */
 function updateStats(jobs) {
-  const totalVacancies = jobs.reduce((sum, j) => sum + j.vacancy, 0);
-  const urgentCount = jobs.filter(j => {
-    const d = getDaysLeft(j.lastDateISO);
-    return d >= 0 && d <= 5;
-  }).length;
-  const newCount = jobs.filter(j => {
-    const b = resolveBadge(j);
-    return b === 'NEW' || b === 'TODAY';
-  }).length;
+  const activeJobs = jobs.filter(j => j.status !== 'Closed').length;
+  const govtJobs = jobs.filter(j => j.category === 'Government Jobs').length;
+  const pvtJobs = jobs.filter(j => j.category === 'Private Jobs' || j.category === 'IT Jobs').length;
 
   animateCount(DOM.statTotal(), jobs.length);
-  animateCount(DOM.statVacancies(), totalVacancies);
-  animateCount(DOM.statUrgent(), urgentCount);
-  animateCount(DOM.statNew(), newCount);
+  
+  // Repurposed Stat Cards:
+  // We'll update the labels directly in JS if they don't match the new data well,
+  // but for now we'll just populate them logically.
+  
+  // statVacancies element will be "Active Jobs"
+  const statVacanciesLabel = DOM.statVacancies()?.nextElementSibling;
+  if (statVacanciesLabel) statVacanciesLabel.textContent = 'Active Jobs';
+  animateCount(DOM.statVacancies(), activeJobs);
+  
+  // statUrgent element will be "Govt Jobs"
+  const statUrgentLabel = DOM.statUrgent()?.nextElementSibling;
+  if (statUrgentLabel) statUrgentLabel.textContent = 'Govt Jobs';
+  animateCount(DOM.statUrgent(), govtJobs);
+  
+  // statNew element will be "Private / IT Jobs"
+  const statNewLabel = DOM.statNew()?.nextElementSibling;
+  if (statNewLabel) statNewLabel.textContent = 'Private / IT Jobs';
+  animateCount(DOM.statNew(), pvtJobs);
 }
 
 /**
@@ -841,10 +548,10 @@ function updateResultsCount(count) {
 /**
  * Called when a CLICK TO APPLY button is clicked.
  * Shows a confirmation toast.
- * @param {string} orgName - organisation name for the toast
+ * @param {string} title - job title for the toast
  */
-function handleApplyClick(orgName) {
-  showToast(`Opening official application for ${orgName} 🚀`, 'success');
+function handleApplyClick(title) {
+  showToast(`Opening official application for ${title} 🚀`, 'success');
 }
 
 // Make globally accessible (called via inline onclick)
