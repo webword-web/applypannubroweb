@@ -98,7 +98,7 @@ const jobsData = [
     status: "Active",
     applyLink: "https://wa.me/918525041700?text=Hi,%20I%20want%20to%20apply%20for%20TNPSC%20Group%204%20Services.",
     image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=600&auto=format&fit=crop"
-  }
+  },
 
   {
     title: "Test demo",
@@ -114,7 +114,7 @@ const jobsData = [
     status: "Active",
     applyLink: "https://wa.me/918525041700?text=Hi,%20I%20want%20to%20apply%20for%20Tamil%20Nadu%20Village%20Assistant%20Recruitment%202026.",
     image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=600&auto=format&fit=crop"
-  },
+  }
 
   // ===== DELETE JOB HERE =====
   // Just remove the block {} for the job you want to delete
