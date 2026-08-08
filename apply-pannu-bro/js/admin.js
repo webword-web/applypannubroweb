@@ -17,30 +17,33 @@ let currentFilter = 'all';
 let currentSearch = '';
 
 // ============================================================
-// SEED — Load default services into LocalStorage on first visit
+// SEED — Removed since we migrated to Firebase
 // ============================================================
 function seedServices() {
-  if (localStorage.getItem(LS_KEY)) return; // Already seeded
-
-  // Pull from main.js window.servicesData if available
-  const source = (window.servicesData || []).map(s => ({
-    ...s,
-    status: 'available',
-    visible: true
-  }));
-
-  localStorage.setItem(LS_KEY, JSON.stringify(source));
+  // Handled by Firebase now. 
 }
 
 // ============================================================
-// STORAGE HELPERS
+// STORAGE HELPERS (Firebase)
 // ============================================================
 function getServices() {
-  return JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+  return window.servicesData || [];
 }
 
 function saveServices(services) {
-  localStorage.setItem(LS_KEY, JSON.stringify(services));
+  // Update locally immediately for synchronous renders
+  window.servicesData = services;
+
+  if (typeof firebase !== 'undefined') {
+    firebase.database().ref('services').set(services)
+      .catch(err => {
+        console.error("Firebase save failed:", err);
+        showToast('Error saving to database', 'error');
+      });
+  } else {
+    // Fallback if Firebase not setup
+    localStorage.setItem(LS_KEY, JSON.stringify(services));
+  }
 }
 
 function generateId() {

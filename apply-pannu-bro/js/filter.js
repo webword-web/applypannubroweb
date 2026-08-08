@@ -81,11 +81,40 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // -------------------------------------------------------
-  // Initial render — immediate, no loading state
+  // Render via _triggerRender when Firebase data changes
   // -------------------------------------------------------
-  const allServices = getLiveServices();
   const isHomePage = document.getElementById('home-page-marker') !== null;
-  window.renderServices(isHomePage ? allServices.slice(0, 12) : allServices);
+  
+  window._triggerRender = () => {
+    // Update live services list for search
+    window._liveServices = getLiveServices();
+    
+    // Check if there is an active filter or search
+    const activeBtn = document.querySelector('.filter-btn.active');
+    const category = activeBtn ? activeBtn.getAttribute('data-filter') : 'All';
+    const searchInput = document.getElementById('service-search');
+    const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    
+    let filtered = getLiveServices();
+    
+    if (category !== 'All') {
+      filtered = filtered.filter(s => s.category === category || (s.category && s.category.includes(category)));
+    }
+    
+    if (searchQuery.length >= 2) {
+      filtered = filtered.filter(s =>
+        s.title.toLowerCase().includes(searchQuery) ||
+        (s.desc && s.desc.toLowerCase().includes(searchQuery))
+      );
+    }
+    
+    window.renderServices(isHomePage ? filtered.slice(0, 12) : filtered);
+  };
+  
+  // Render immediately in case data is already present
+  if (window.servicesData && window.servicesData.length > 0) {
+    window._triggerRender();
+  }
 
   // -------------------------------------------------------
   // Filter Button Click Logic
